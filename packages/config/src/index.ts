@@ -15,5 +15,5 @@ export type {
   ProviderSettings,
   RootConfig,
   Theme,
-  WeatherThreshold,
+  Threshold,
 } from './types';

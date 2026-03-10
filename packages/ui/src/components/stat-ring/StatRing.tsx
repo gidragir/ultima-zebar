@@ -1,13 +1,12 @@
 import { cn } from '../../utils/cn';
 import Ring from './components/Ring';
 import { systemStatThresholds } from './defaults/systemStatThresholds';
-import { LabelType } from './types/labelType';
-import { Thresholds } from './types/thresholds';
+import { Threshold } from '@overline-zebar/config';
 
 interface StatRingProps {
   Icon: React.ReactNode;
   stat: string;
-  threshold?: Thresholds;
+  threshold?: Threshold[];
 }
 
 export function StatRing({
@@ -24,32 +23,35 @@ export function StatRing({
     return 0;
   }
 
-  function getThresholdLabel(value: number) {
+  function getThresholdColor(value: number) {
     const range = threshold.find((r) => value >= r.min && value <= r.max);
-    return range ? range.label : LabelType.DEFAULT;
+    return range ? range.labelColor : '--text';
   }
 
   const statAsInt = getNumbersFromString(stat);
-  const thresholdLabel = getThresholdLabel(statAsInt);
+  const thresholdColor = getThresholdColor(statAsInt);
+
+  const colorClassMap: Record<string, { text: string; stroke: string }> = {
+    '--text': { text: 'text-text', stroke: 'stroke-success' },
+    '--warning': { text: 'text-warning', stroke: 'stroke-warning' },
+    '--danger': { text: 'text-danger', stroke: 'stroke-danger' },
+  };
+
+  const colors = colorClassMap[thresholdColor] || colorClassMap['--text'];
+
+  if (!colors) {
+    return null;
+  }
 
   return (
     <div
-      className={cn(
-        'flex items-center justify-center gap-1.5',
-        thresholdLabel === LabelType.DEFAULT && 'text-text',
-        thresholdLabel === LabelType.WARNING && 'text-warning',
-        thresholdLabel === LabelType.DANGER && 'text-danger'
-      )}
+      className={cn('flex items-center justify-center gap-1.5', colors.text)}
     >
       {Icon}
       <Ring
         percentage={statAsInt}
         className="h-3.5 w-3.5"
-        strokeColor={cn(
-          thresholdLabel === LabelType.DEFAULT && 'stroke-success',
-          thresholdLabel === LabelType.WARNING && 'stroke-warning',
-          thresholdLabel === LabelType.DANGER && 'stroke-danger'
-        )}
+        strokeColor={cn(colors.stroke)}
       />
     </div>
   );

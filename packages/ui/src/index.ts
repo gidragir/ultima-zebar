@@ -1,7 +1,6 @@
 export { Button, buttonVariants } from './components/button';
 export { StatRing } from './components/stat-ring/StatRing';
 export { LabelType } from './components/stat-ring/types/labelType';
-export type { Thresholds } from './components/stat-ring/types/thresholds';
 export { systemStatThresholds } from './components/stat-ring/defaults/systemStatThresholds';
 export { Card, CardTitle } from './components/card/Card';
 export { Chip, chipStyles } from './components/chip';

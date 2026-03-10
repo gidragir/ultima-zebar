@@ -12,7 +12,9 @@ export function useThemePreview() {
   const applyPreviewStyles = useCallback((theme: Theme) => {
     // Apply locally for instant feedback
     Object.entries(theme.colors).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(key, value);
+      if (value !== undefined) {
+        document.documentElement.style.setProperty(key, value);
+      }
     });
     // Broadcast to other widgets
     zebar.currentWidget().tauriWindow.emit('theme-preview-update', theme);
@@ -37,9 +39,13 @@ export function useThemePreview() {
     (updatedProperties: Partial<Theme['colors']>) => {
       setPreviewTheme((currentPreview) => {
         if (!currentPreview) return null;
+        const newColors = {
+          ...currentPreview.colors,
+          ...updatedProperties,
+        } as Record<string, string>;
         const newPreview = {
           ...currentPreview,
-          colors: { ...currentPreview.colors, ...updatedProperties },
+          colors: newColors,
         };
         applyPreviewStyles(newPreview);
         return newPreview;

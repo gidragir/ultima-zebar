@@ -33,8 +33,13 @@ export default function StatProviders({
   );
   const [weatherThresholds] = useWidgetSetting('main', 'weatherThresholds');
   const [weatherUnit] = useWidgetSetting('main', 'weatherUnit');
+  const [useInlineStats] = useWidgetSetting('main', 'useInlineStats');
+  const [systemStatThresholds] = useWidgetSetting(
+    'main',
+    'systemStatThresholds'
+  );
   const chipRef = useRef<HTMLDivElement | null>(null);
-  const statIconClassnames = 'h-3.5 w-3.5 text-icon';
+  const statIconClassnames = 'size-3.5 -mt-0.5 text-icon';
 
   if (allProvidersDisabled) return null;
 
@@ -55,7 +60,8 @@ export default function StatProviders({
         <Stat
           Icon={<p className="font-medium text-icon">CPU</p>}
           stat={`${Math.round(cpu.usage)}%`}
-          type="ring"
+          type={useInlineStats ? 'inline' : 'ring'}
+          threshold={systemStatThresholds}
         />
       )}
 
@@ -63,7 +69,8 @@ export default function StatProviders({
         <Stat
           Icon={<p className="font-medium text-icon">RAM</p>}
           stat={`${Math.round(memory.usage)}%`}
-          type="ring"
+          type={useInlineStats ? 'inline' : 'ring'}
+          threshold={systemStatThresholds}
         />
       )}
 

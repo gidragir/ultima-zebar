@@ -36,7 +36,7 @@ function App() {
 
   useAutoTiling();
 
-  const statIconClassnames = 'h-3.5 w-3.5 text-icon';
+  const volumeIconClassnames = 'h-3.5 w-3.5 text-icon';
   const [marginX] = useWidgetSetting('main', 'marginX');
   const [paddingLeft] = useWidgetSetting('main', 'paddingLeft');
   const [paddingRight] = useWidgetSetting('main', 'paddingRight');
@@ -84,7 +84,7 @@ function App() {
         <div className="flex items-center h-full">
           <VolumeControl
             audio={output.audio}
-            statIconClassnames={statIconClassnames}
+            iconClassnames={volumeIconClassnames}
           />
         </div>
         <div className="h-full flex items-center px-0.5">

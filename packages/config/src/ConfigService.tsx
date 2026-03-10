@@ -74,10 +74,11 @@ function updateWidgetSetting(
   value: unknown
 ) {
   const config = loadConfig();
-  if (!config.widgets[widgetName]) {
-    config.widgets[widgetName] = {};
+  const widgets = config.widgets as Record<string, unknown>;
+  if (!widgets[widgetName]) {
+    widgets[widgetName] = {};
   }
-  config.widgets[widgetName][key] = value;
+  (widgets[widgetName] as Record<string, unknown>)[key] = value;
   saveConfig(config);
 }
 
@@ -88,7 +89,8 @@ function getAppSetting<K extends keyof RootConfig['app']>(
 }
 
 function getWidgetSetting(widgetName: string, key: string): unknown {
-  return loadConfig().widgets[widgetName]?.[key];
+  const widgets = loadConfig().widgets as Record<string, unknown>;
+  return (widgets[widgetName] as Record<string, unknown>)?.[key];
 }
 
 export const configService = {

@@ -39,18 +39,22 @@ export const ProviderSettingsSchema = z.object({
 });
 
 export const MainWidgetSettingsSchema = BaseWidgetSettingsSchema.extend({
-  flowLauncherPath: z.string(),
-  mediaMaxWidth: z.string(),
-  weatherThresholds: z.array(WeatherThresholdSchema),
-  weatherUnit: z.union([z.literal('celsius'), z.literal('fahrenheit')]),
-  pinnedSystrayIcons: z.array(SystrayIconSchema),
-  marginX: z.number(),
-  paddingLeft: z.number(),
-  paddingRight: z.number(),
-  dynamicWorkspaceIndicator: z.boolean(),
+  flowLauncherPath: z.string().default(''),
+  mediaMaxWidth: z.string().default('400'),
+  weatherThresholds: z.array(WeatherThresholdSchema).default([]),
+  weatherUnit: z
+    .union([z.literal('celsius'), z.literal('fahrenheit')])
+    .default('celsius'),
+  pinnedSystrayIcons: z.array(SystrayIconSchema).default([]),
+  marginX: z.number().default(0),
+  paddingLeft: z.number().default(4),
+  paddingRight: z.number().default(4),
+  dynamicWorkspaceIndicator: z.boolean().default(false),
   timeFormat: z.string().default('EEE d MMM t'),
   timeLocale: z.string().default('en-GB'),
   providers: ProviderSettingsSchema.default({}),
+  systemStatThresholds: z.array(WeatherThresholdSchema).default([]),
+  useInlineStats: z.boolean().default(false),
 });
 
 export const LauncherCommandSchema = z.object({

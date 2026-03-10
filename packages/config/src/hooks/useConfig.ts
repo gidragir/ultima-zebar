@@ -7,20 +7,37 @@ export function useAppSetting<K extends keyof RootConfig['app']>(key: K) {
   return [
     state.app[key],
     (value: RootConfig['app'][K]) =>
-      dispatch({ type: 'SET_APP_SETTING', key, value }),
+      dispatch({
+        type: 'SET_APP_SETTING',
+        key: key as
+          | 'useAutoTiling'
+          | 'zebarWebsocketUri'
+          | 'currentThemeId'
+          | 'radius',
+        value: value as unknown as 'useAutoTiling' extends K
+          ? boolean
+          : 'zebarWebsocketUri' extends K
+            ? string
+            : 'currentThemeId' extends K
+              ? string
+              : 'radius' extends K
+                ? string
+                : never,
+      }),
   ] as const;
 }
 
 export function useWidgetSetting<
   T extends keyof AllWidgetSettings,
-  K extends keyof AllWidgetSettings[T],
+  K extends string,
 >(widgetName: T, key: K) {
   const state = useConfigState();
   const dispatch = useConfigDispatch();
 
-  const value = state.widgets[widgetName]?.[key];
+  const widgets = state.widgets as Record<string, Record<string, unknown>>;
+  const value = widgets[widgetName]?.[key];
 
-  const setValue = (value: AllWidgetSettings[T][K]) => {
+  const setValue = (value: unknown) => {
     dispatch({ type: 'SET_WIDGET_SETTING', widget: widgetName, key, value });
   };
 
