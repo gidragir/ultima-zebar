@@ -5,7 +5,7 @@ import {
   FormField,
   Switch,
 } from '@overline-zebar/ui';
-import WeatherThresholds from './WeatherThresholds';
+import ThresholdsInput from './ThresholdsInput';
 import { useWidgetSetting, ProviderSettings } from '@overline-zebar/config';
 import { Separator } from '@/components/common/Separator';
 
@@ -26,6 +26,10 @@ export default function SystemStatsTab() {
   const [systemStatThresholds, setSystemStatThresholds] = useWidgetSetting(
     'main',
     'systemStatThresholds'
+  );
+  const [batteryThresholds, setBatteryThresholds] = useWidgetSetting(
+    'main',
+    'batteryThresholds'
   );
 
   const handleProviderToggle = (
@@ -95,7 +99,7 @@ export default function SystemStatsTab() {
                   Configure color ranges based on usage percentage.
                 </p>
               </div>
-              <WeatherThresholds
+              <ThresholdsInput
                 thresholds={systemStatThresholds}
                 onChange={setSystemStatThresholds}
               />
@@ -133,9 +137,29 @@ export default function SystemStatsTab() {
                 each range.
               </p>
             </div>
-            <WeatherThresholds />
+            <ThresholdsInput />
           </div>
         </div>
+      )}
+
+      {/* Battery Thresholds */}
+      {providers.battery && (
+        <>
+          <Separator />
+          <div className="space-y-4">
+            <div className="space-y-0.5">
+              <h1 className="text-text">Battery Thresholds</h1>
+              <p className="text-text-muted">
+                Configure color ranges based on battery percentage.
+              </p>
+            </div>
+            <ThresholdsInput
+              thresholds={batteryThresholds}
+              onChange={setBatteryThresholds}
+              settingKey="batteryThresholds"
+            />
+          </div>
+        </>
       )}
     </>
   );

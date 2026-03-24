@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import * as zebar from 'zebar';
-import { useWidgetSetting } from '@overline-zebar/config';
+import { useWidgetSetting, Threshold } from '@overline-zebar/config';
 import { Chip } from '@overline-zebar/ui';
 import { calculateWidgetPlacementFromRight } from '../../utils/calculateWidgetPlacement';
 import { getWeatherIcon } from '../../utils/weatherIcons';
@@ -38,6 +38,7 @@ export default function StatProviders({
     'main',
     'systemStatThresholds'
   );
+  const [batteryThresholds] = useWidgetSetting('main', 'batteryThresholds');
   const chipRef = useRef<HTMLDivElement | null>(null);
   const statIconClassnames = 'size-3.5 text-icon';
 
@@ -87,7 +88,11 @@ export default function StatProviders({
         />
       )}
 
-      <BatteryStat battery={battery} batteryProvider={statProviders.battery} />
+      <BatteryStat
+        battery={battery}
+        batteryProvider={statProviders.battery}
+        batteryThresholds={batteryThresholds}
+      />
     </Chip>
   );
 }
@@ -95,9 +100,14 @@ export default function StatProviders({
 type BatteryStatProps = {
   battery: zebar.BatteryOutput | null;
   batteryProvider: boolean;
+  batteryThresholds: Threshold[];
 };
 
-function BatteryStat({ battery, batteryProvider }: BatteryStatProps) {
+function BatteryStat({
+  battery,
+  batteryProvider,
+  batteryThresholds,
+}: BatteryStatProps) {
   if (!batteryProvider || !battery) return null;
 
   const chargePercent = Math.round(battery.chargePercent);
@@ -127,6 +137,11 @@ function BatteryStat({ battery, batteryProvider }: BatteryStatProps) {
   };
 
   return (
-    <Stat Icon={renderBatteryIcon()} stat={`${chargePercent}%`} type="inline" />
+    <Stat
+      Icon={renderBatteryIcon()}
+      stat={`${chargePercent}%`}
+      type="inline"
+      threshold={batteryThresholds}
+    />
   );
 }

@@ -14,17 +14,20 @@ import {
 } from '@overline-zebar/ui';
 import { NumberInput } from '../../../../NumberInput';
 
-interface WeatherThresholdsProps {
+interface ThresholdsInputProps {
   thresholds?: Threshold[];
   onChange?: (thresholds: Threshold[]) => void;
-  settingKey?: 'weatherThresholds' | 'systemStatThresholds';
+  settingKey?:
+    | 'weatherThresholds'
+    | 'systemStatThresholds'
+    | 'batteryThresholds';
 }
 
-export function WeatherThresholds({
+export function ThresholdsInput({
   thresholds: thresholdsProp,
   onChange: onChangeProp,
   settingKey = 'weatherThresholds',
-}: WeatherThresholdsProps = {}) {
+}: ThresholdsInputProps = {}) {
   const [thresholdsInternal, setThresholdsInternal] = useWidgetSetting(
     'main',
     settingKey
@@ -125,4 +128,4 @@ function ThresholdColorSelect({
   );
 }
 
-export default WeatherThresholds;
+export default ThresholdsInput;

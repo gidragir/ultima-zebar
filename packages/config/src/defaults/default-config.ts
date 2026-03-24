@@ -25,6 +25,11 @@ export const defaultConfig: RootConfig = {
         { id: 'stat-2', min: 70, max: 85, labelColor: '--warning' },
         { id: 'stat-3', min: 85, max: 100, labelColor: '--danger' },
       ],
+      batteryThresholds: [
+        { id: 'battery-1', min: 0, max: 20, labelColor: '--danger' },
+        { id: 'battery-2', min: 20, max: 60, labelColor: '--warning' },
+        { id: 'battery-3', min: 60, max: 100, labelColor: '--text' },
+      ],
       useInlineStats: false,
       pinnedSystrayIcons: [],
       weatherUnit: 'celsius',

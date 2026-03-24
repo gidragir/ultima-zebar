@@ -54,6 +54,7 @@ export const MainWidgetSettingsSchema = BaseWidgetSettingsSchema.extend({
   timeLocale: z.string().default('en-GB'),
   providers: ProviderSettingsSchema.default({}),
   systemStatThresholds: z.array(ThresholdSchema).default([]),
+  batteryThresholds: z.array(ThresholdSchema).default([]),
   useInlineStats: z.boolean().default(false),
 });
 

@@ -1,12 +1,16 @@
 import { Battery, Cable, Heart, PlugZap, RefreshCcw, Zap } from 'lucide-react';
 import { BatteryOutput } from 'zebar';
 import { formatMsToHumanDuration } from '@/utils/time';
-import { cn } from '@/utils/cn';
+import { Threshold, useWidgetSetting } from '@overline-zebar/config';
 
 type BatteryProps = {
   battery: BatteryOutput;
+  thresholds?: Threshold[];
 };
-export function BatterySection({ battery }: BatteryProps) {
+export function BatterySection({ battery, thresholds }: BatteryProps) {
+  const [configThresholds] = useWidgetSetting('main', 'batteryThresholds');
+  const batteryThresholds = thresholds ?? configThresholds;
+
   const timeTillFullOrEmpty = battery.isCharging
     ? battery.timeTillFull
     : battery.timeTillEmpty;
@@ -14,16 +18,14 @@ export function BatterySection({ battery }: BatteryProps) {
   const formatTimeTillFullOrEmpty = timeTillFullOrEmpty
     ? `${formatMsToHumanDuration(timeTillFullOrEmpty)} ${status}`
     : null;
-  const batteryThreshold = () => {
-    const batteryPercentage = battery.chargePercent;
-    if (batteryPercentage >= 0 && batteryPercentage <= 20) {
-      return 'danger';
-    } else if (batteryPercentage >= 20 && batteryPercentage <= 60) {
-      return 'warning';
-    } else {
-      return 'success';
-    }
-  };
+
+  function getThresholdLabel(value: number) {
+    if (!batteryThresholds) return '--text';
+    const range = batteryThresholds.find(
+      (r) => value >= r.min && value <= r.max
+    );
+    return range ? range.labelColor : '--text';
+  }
 
   return (
     <div className="space-y-3">
@@ -38,7 +40,14 @@ export function BatterySection({ battery }: BatteryProps) {
             ) : (
               <Battery className="h-4 w-4 text-icon" />
             )}
-            <p className="text-text">{battery.chargePercent}%</p>
+            <p
+              className="text-text"
+              style={{
+                color: `var(${getThresholdLabel(battery.chargePercent)})`,
+              }}
+            >
+              {battery.chargePercent}%
+            </p>
           </div>
           {formatTimeTillFullOrEmpty && (
             <p>{`~ ${formatTimeTillFullOrEmpty}`}</p>
@@ -47,13 +56,11 @@ export function BatterySection({ battery }: BatteryProps) {
         <div className="h-2 w-full bg-background border-border border overflow-clip rounded">
           <div
             title={`${battery.chargePercent}%`}
-            className={cn(
-              'h-full',
-              batteryThreshold() === 'danger' && 'bg-danger',
-              batteryThreshold() === 'warning' && 'bg-warning',
-              batteryThreshold() === 'success' && 'bg-success'
-            )}
-            style={{ width: battery.chargePercent + '%' }}
+            className="h-full"
+            style={{
+              width: battery.chargePercent + '%',
+              backgroundColor: `var(${getThresholdLabel(battery.chargePercent)})`,
+            }}
           />
         </div>
       </div>
