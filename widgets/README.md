@@ -57,36 +57,62 @@ function MyComponent() {
 
 The `useWidgetSetting` hook is used for settings that are specific to a single widget. It takes the widget's name as the first argument and the setting name as the second.
 
-**Example: Creating a setting for `my-new-widget`**
+When adding a new widget with settings, you need to update **three files**:
 
-1.  **Define the setting in `zod-types.ts`**: Add a new schema for your widget's settings in `packages/config/src/zod-types.ts`.
+1. **Define the schema** in `packages/config/src/zod-types.ts`:
 
-    ```ts
-    // packages/config/src/zod-types.ts
-    export const myNewWidgetSettingsSchema = z.object({
-      mySetting: z.string().default('default-value'),
-    });
+   ```ts
+   // Add a new schema
+   export const myNewWidgetSettingsSchema = z.object({
+     mySetting: z.string().default('default-value'),
+   });
 
-    export const widgetSettingsSchema = z.object({
-      main: mainWidgetSettingsSchema,
-      'my-new-widget': myNewWidgetSettingsSchema, // Add this line
-    });
-    ```
+   // Add to AllWidgetSettingsSchema
+   export const AllWidgetSettingsSchema = z.object({
+     main: MainWidgetSettingsSchema,
+     'script-launcher': ScriptLauncherWidgetSettingsSchema,
+     'config-widget': z.object({}),
+     'my-new-widget': myNewWidgetSettingsSchema, // Add this
+   });
+   ```
 
-2.  **Use the setting in your widget**:
+2. **Add to type map** in `packages/config/src/types.ts`:
 
-    ```tsx
-    import { useWidgetSetting } from '@overline-zebar/config';
+   ```ts
+   export type WidgetSettingsMap = {
+     main: MainWidgetSettings;
+     'script-launcher': ScriptLauncherWidgetSettings;
+     'config-widget': Record<string, unknown>;
+     'my-new-widget': z.infer<typeof myNewWidgetSettingsSchema>; // Add this
+   };
+   ```
 
-    function MyWidgetComponent() {
-      const [mySetting, setMySetting] = useWidgetSetting(
-        'my-new-widget',
-        'mySetting'
-      );
+3. **Add defaults** in `packages/config/src/defaults/default-config.ts`:
 
-      // ...
-    }
-    ```
+   ```ts
+   widgets: {
+     main: { /* ... */ },
+     'script-launcher': { /* ... */ },
+     'my-new-widget': {  // Add this
+       mySetting: 'default-value',
+     },
+   },
+   ```
+
+4. **Use the setting in your widget**:
+
+   ```tsx
+   import { useWidgetSetting } from '@overline-zebar/config';
+
+   function MyWidgetComponent() {
+     const [mySetting, setMySetting] = useWidgetSetting(
+       'my-new-widget',
+       'mySetting'
+     );
+
+     // ...
+   }
+   ```
 
 ### `@overline-zebar/ui`
 
