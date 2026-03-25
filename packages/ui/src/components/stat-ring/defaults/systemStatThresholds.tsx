@@ -1,8 +1,7 @@
-import { LabelType } from '../types/labelType';
-import { Thresholds } from '../types/thresholds';
+import { Threshold } from '@overline-zebar/config';
 
-export const systemStatThresholds: Thresholds = [
-  { min: 0, max: 70, label: LabelType.DEFAULT },
-  { min: 70, max: 85, label: LabelType.WARNING },
-  { min: 85, max: 100, label: LabelType.DANGER },
+export const systemStatThresholds: Threshold[] = [
+  { id: 'stat-1', min: 0, max: 70, labelColor: '--text' },
+  { id: 'stat-2', min: 70, max: 85, labelColor: '--warning' },
+  { id: 'stat-3', min: 85, max: 100, labelColor: '--danger' },
 ];

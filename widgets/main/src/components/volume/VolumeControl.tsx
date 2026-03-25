@@ -6,10 +6,10 @@ import { AudioOutput } from 'zebar';
 import Slider from './components/Slider';
 
 export default function VolumeControl({
-  statIconClassnames,
+  iconClassnames,
   audio,
 }: {
-  statIconClassnames: string;
+  iconClassnames: string;
   audio: AudioOutput | null;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -66,11 +66,11 @@ export default function VolumeControl({
 
   const renderIcon = () => {
     if (playbackDevice.volume === 0) {
-      return <Volume className={statIconClassnames} strokeWidth={3} />;
+      return <Volume className={iconClassnames} strokeWidth={3} />;
     } else if (playbackDevice.volume > 0 && playbackDevice.volume < 60) {
-      return <Volume1 className={statIconClassnames} strokeWidth={3} />;
+      return <Volume1 className={iconClassnames} strokeWidth={3} />;
     } else {
-      return <Volume2 className={statIconClassnames} strokeWidth={3} />;
+      return <Volume2 className={iconClassnames} strokeWidth={3} />;
     }
   };
 

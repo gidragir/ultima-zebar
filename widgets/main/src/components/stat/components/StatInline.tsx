@@ -1,10 +1,10 @@
-import { WeatherThreshold } from '@overline-zebar/config';
+import { Threshold } from '@overline-zebar/config';
 import { cn } from '../../../utils/cn';
 
 interface StatProps {
   Icon: React.ReactNode;
   stat: string;
-  threshold?: WeatherThreshold[];
+  threshold?: Threshold[];
 }
 
 export function StatInline({ Icon, stat, threshold }: StatProps) {
@@ -28,7 +28,7 @@ export function StatInline({ Icon, stat, threshold }: StatProps) {
       style={{ color: thresholdLabel ? `var(${thresholdLabel})` : undefined }}
     >
       {Icon}
-      <p>{stat}</p>
+      <p className="tabular-nums">{stat}</p>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export const LabelColorSchema = z.union([
 
 export const BaseWidgetSettingsSchema = z.object({});
 
-export const WeatherThresholdSchema = z.object({
+export const ThresholdSchema = z.object({
   id: z.string(),
   min: z.number(),
   max: z.number(),
@@ -39,18 +39,23 @@ export const ProviderSettingsSchema = z.object({
 });
 
 export const MainWidgetSettingsSchema = BaseWidgetSettingsSchema.extend({
-  flowLauncherPath: z.string(),
-  mediaMaxWidth: z.string(),
-  weatherThresholds: z.array(WeatherThresholdSchema),
-  weatherUnit: z.union([z.literal('celsius'), z.literal('fahrenheit')]),
-  pinnedSystrayIcons: z.array(SystrayIconSchema),
-  marginX: z.number(),
-  paddingLeft: z.number(),
-  paddingRight: z.number(),
-  dynamicWorkspaceIndicator: z.boolean(),
+  flowLauncherPath: z.string().default(''),
+  mediaMaxWidth: z.string().default('400'),
+  weatherThresholds: z.array(ThresholdSchema).default([]),
+  weatherUnit: z
+    .union([z.literal('celsius'), z.literal('fahrenheit')])
+    .default('celsius'),
+  pinnedSystrayIcons: z.array(SystrayIconSchema).default([]),
+  marginX: z.number().default(0),
+  paddingLeft: z.number().default(4),
+  paddingRight: z.number().default(4),
+  dynamicWorkspaceIndicator: z.boolean().default(false),
   timeFormat: z.string().default('EEE d MMM t'),
   timeLocale: z.string().default('en-GB'),
   providers: ProviderSettingsSchema.default({}),
+  systemStatThresholds: z.array(ThresholdSchema).default([]),
+  batteryThresholds: z.array(ThresholdSchema).default([]),
+  useInlineStats: z.boolean().default(false),
 });
 
 export const LauncherCommandSchema = z.object({

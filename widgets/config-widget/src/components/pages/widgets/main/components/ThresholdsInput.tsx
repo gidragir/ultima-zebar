@@ -1,7 +1,7 @@
 import {
   LabelColor,
   useWidgetSetting,
-  WeatherThreshold,
+  Threshold,
 } from '@overline-zebar/config';
 import {
   FieldTitle,
@@ -14,16 +14,49 @@ import {
 } from '@overline-zebar/ui';
 import { NumberInput } from '../../../../NumberInput';
 
-export function WeatherThresholds() {
-  const [thresholds] = useWidgetSetting('main', 'weatherThresholds');
+interface ThresholdsInputProps {
+  thresholds?: Threshold[];
+  onChange?: (thresholds: Threshold[]) => void;
+  settingKey?:
+    | 'weatherThresholds'
+    | 'systemStatThresholds'
+    | 'batteryThresholds';
+}
+
+export function ThresholdsInput({
+  thresholds: thresholdsProp,
+  onChange: onChangeProp,
+  settingKey = 'weatherThresholds',
+}: ThresholdsInputProps = {}) {
+  const [thresholdsInternal, setThresholdsInternal] = useWidgetSetting(
+    'main',
+    settingKey
+  );
+
+  const thresholds = thresholdsProp ?? thresholdsInternal;
+  const setThresholds = onChangeProp ?? setThresholdsInternal;
 
   return (
     <div className="w-full space-y-3">
-      {(thresholds ?? []).map((t) => (
-        <div className="flex items-center gap-4 w-full">
-          <ThresholdInput threshold={t} minOrMax="min" />
-          <ThresholdInput threshold={t} minOrMax="max" />
-          <ThresholdColorSelect threshold={t} />
+      {(thresholds ?? []).map((t: Threshold) => (
+        <div className="flex items-center gap-4 w-full" key={t.id}>
+          <ThresholdInput
+            threshold={t}
+            minOrMax="min"
+            thresholds={thresholds}
+            setThresholds={setThresholds}
+          />
+          <ThresholdInput
+            threshold={t}
+            minOrMax="max"
+            thresholds={thresholds}
+            setThresholds={setThresholds}
+          />
+          <ThresholdColorSelect
+            threshold={t}
+            thresholds={thresholds}
+            setThresholds={setThresholds}
+          />
         </div>
       ))}
     </div>
@@ -31,16 +64,18 @@ export function WeatherThresholds() {
 }
 
 type ThresholdInputProps = {
-  threshold: WeatherThreshold;
+  threshold: Threshold;
   minOrMax: 'min' | 'max';
+  thresholds: Threshold[];
+  setThresholds: (thresholds: Threshold[]) => void;
 };
 
-function ThresholdInput({ threshold, minOrMax }: ThresholdInputProps) {
-  const [thresholds, setThresholds] = useWidgetSetting(
-    'main',
-    'weatherThresholds'
-  );
-
+function ThresholdInput({
+  threshold,
+  minOrMax,
+  thresholds,
+  setThresholds,
+}: ThresholdInputProps) {
   const handleChange = (newValue: number) => {
     const newThresholds = thresholds.map((t) =>
       t.id === threshold.id ? { ...t, [minOrMax]: newValue } : t
@@ -59,15 +94,16 @@ function ThresholdInput({ threshold, minOrMax }: ThresholdInputProps) {
 }
 
 type ThresholdColorSelectProps = {
-  threshold: WeatherThreshold;
+  threshold: Threshold;
+  thresholds: Threshold[];
+  setThresholds: (thresholds: Threshold[]) => void;
 };
 
-function ThresholdColorSelect({ threshold }: ThresholdColorSelectProps) {
-  const [thresholds, setThresholds] = useWidgetSetting(
-    'main',
-    'weatherThresholds'
-  );
-
+function ThresholdColorSelect({
+  threshold,
+  thresholds,
+  setThresholds,
+}: ThresholdColorSelectProps) {
   const handleColorChange = (newValue: unknown) => {
     const newThresholds = thresholds.map((t) =>
       t.id === threshold.id ? { ...t, labelColor: newValue as LabelColor } : t
@@ -92,4 +128,4 @@ function ThresholdColorSelect({ threshold }: ThresholdColorSelectProps) {
   );
 }
 
-export default WeatherThresholds;
+export default ThresholdsInput;

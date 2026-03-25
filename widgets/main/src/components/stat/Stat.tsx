@@ -1,5 +1,5 @@
-import { WeatherThreshold } from '@overline-zebar/config';
-import { StatRing, Thresholds } from '@overline-zebar/ui';
+import { Threshold } from '@overline-zebar/config';
+import { StatRing } from '@overline-zebar/ui';
 import { StatInline } from './components/StatInline';
 
 interface BaseStatProps {
@@ -7,11 +7,10 @@ interface BaseStatProps {
   stat: string;
 }
 
-type StatProps = BaseStatProps &
-  (
-    | { type: 'ring'; threshold?: Thresholds }
-    | { type: 'inline'; threshold?: WeatherThreshold[] }
-  );
+type StatProps = BaseStatProps & {
+  type: 'ring' | 'inline';
+  threshold?: Threshold[];
+};
 
 export default function Stat(props: StatProps) {
   switch (props.type) {

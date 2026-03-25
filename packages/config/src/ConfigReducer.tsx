@@ -74,9 +74,9 @@ export function configReducer(state: State, action: Action): State {
       return newState;
     }
     case 'UPDATE_WIDGET_SETTINGS': {
-      const newWidgets = { ...state.widgets };
+      const newWidgets = { ...state.widgets } as Record<string, unknown>;
       newWidgets[action.widget] = {
-        ...(newWidgets[action.widget] || {}),
+        ...((newWidgets[action.widget] as Record<string, unknown>) || {}),
         ...action.settings,
       };
       const newState = { ...state, widgets: newWidgets };
@@ -84,9 +84,9 @@ export function configReducer(state: State, action: Action): State {
       return newState;
     }
     case 'SET_WIDGET_SETTING': {
-      const newWidgets = { ...state.widgets };
+      const newWidgets = { ...state.widgets } as Record<string, unknown>;
       newWidgets[action.widget] = {
-        ...(newWidgets[action.widget] || {}),
+        ...((newWidgets[action.widget] as Record<string, unknown>) || {}),
         [action.key]: action.value,
       };
       const newState = { ...state, widgets: newWidgets };
@@ -94,9 +94,9 @@ export function configReducer(state: State, action: Action): State {
       return newState;
     }
     case 'SET_WIDGET_VISIBILITY': {
-      const newWidgets = { ...state.widgets };
+      const newWidgets = { ...state.widgets } as Record<string, unknown>;
       newWidgets[action.widget] = {
-        ...(newWidgets[action.widget] || {}),
+        ...((newWidgets[action.widget] as Record<string, unknown>) || {}),
         isVisible: action.visible,
       };
       return { ...state, widgets: newWidgets };
