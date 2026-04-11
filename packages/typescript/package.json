@@ -1,6 +1,6 @@
 {
 	"name": "@ultima-zebar/typescript",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"scripts": {
 		"lint": "biome check .",
 		"format": "biome format --write ."

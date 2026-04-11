@@ -1,5 +1,11 @@
 # @ultima-zebar/config
 
+## 1.0.4
+
+### Patch Changes
+
+- [`1f1850c`](https://github.com/mushfikurr/overline-zebar/commit/1f1850c5c75e38f99dc8f892ce7fc4f6ac01d79b) Thanks [@gidragir](https://github.com/gidragir)! - delete check-format
+
 ## 1.0.3
 
 ### Patch Changes
