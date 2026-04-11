@@ -1,5 +1,11 @@
 # @ultima-zebar/typescript
 
+## 1.1.1
+
+### Patch Changes
+
+- [`faf0782`](https://github.com/mushfikurr/overline-zebar/commit/faf0782178aaea9d040dd01b4d940a2dcb1cd331) Thanks [@gidragir](https://github.com/gidragir)! - fix
+
 ## 1.1.0
 
 ### Minor Changes
