@@ -1,29 +1,29 @@
 {
-    "name": "@ultima-zebar/config",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./src/index.ts",
-    "scripts": {
-        "lint": "biome check .",
-        "format": "biome format --write .",
-        "check-format": "biome format --check ."
-    },
-    "dependencies": {
-        "@tauri-apps/api": "catalog:",
-        "@types/tinycolor2": "^1.4.6",
-        "react": "catalog:",
-        "react-dom": "catalog:",
-        "tinycolor2": "^1.6.0",
-        "use-debounce": "catalog:",
-        "zebar": "catalog:",
-        "zod": "catalog:"
-    },
-    "devDependencies": {
-        "@ultima-zebar/typescript": "workspace:*",
-        "@tsconfig/recommended": "catalog:",
-        "@types/node": "catalog:",
-        "@types/react": "catalog:",
-        "@types/react-dom": "catalog:",
-        "typescript": "catalog:"
-    }
+	"name": "@ultima-zebar/config",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./src/index.ts",
+	"scripts": {
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"check-format": "biome format --check ."
+	},
+	"dependencies": {
+		"@tauri-apps/api": "catalog:",
+		"@types/tinycolor2": "^1.4.6",
+		"react": "catalog:",
+		"react-dom": "catalog:",
+		"tinycolor2": "^1.6.0",
+		"use-debounce": "catalog:",
+		"zebar": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@ultima-zebar/typescript": "workspace:*",
+		"@tsconfig/recommended": "catalog:",
+		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@types/react-dom": "catalog:",
+		"typescript": "catalog:"
+	}
 }

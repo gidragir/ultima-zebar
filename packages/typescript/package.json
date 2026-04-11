@@ -1,12 +1,12 @@
 {
-    "name": "@ultima-zebar/typescript",
-    "version": "0.0.0",
-    "scripts": {
-        "lint": "biome check .",
-        "format": "biome format --write .",
-        "check-format": "biome format --check ."
-    },
-    "publishConfig": {
-        "access": "public"
-    }
+	"name": "@ultima-zebar/typescript",
+	"version": "0.0.0",
+	"scripts": {
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"check-format": "biome format --check ."
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
