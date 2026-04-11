@@ -9,7 +9,8 @@
 		"dev": "vite",
 		"build": "vite build",
 		"build:watch": "vite build --watch",
-		"lint": "biome check .",
+		"lint": "biome check --fix .",
+		"format": "biome format --write .",
 		"preview": "vite preview"
 	},
 	"dependencies": {
