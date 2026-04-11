@@ -1,8 +1,12 @@
 {
   "name": "@ultima-zebar/ui",
-  "version": "1.0.5",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist"],
+  "version": "1.0.6",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {

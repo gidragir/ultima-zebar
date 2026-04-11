@@ -1,5 +1,15 @@
 # @ultima-zebar/main
 
+## 1.0.6
+
+### Patch Changes
+
+- [`306f463`](https://github.com/mushfikurr/overline-zebar/commit/306f463b79a0901fd32c2d70b6b1da6404db6683) Thanks [@gidragir](https://github.com/gidragir)! - fix
+
+- Updated dependencies [[`306f463`](https://github.com/mushfikurr/overline-zebar/commit/306f463b79a0901fd32c2d70b6b1da6404db6683)]:
+  - @ultima-zebar/config@1.0.6
+  - @ultima-zebar/ui@1.0.6
+
 ## 1.0.5
 
 ### Patch Changes
