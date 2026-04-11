@@ -1,7 +1,7 @@
 {
 	"name": "@ultima-zebar/config-widget",
 	"private": true,
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"type": "module",
 	"main": "./src/index.ts",
 	"types": "./src/index.ts",
