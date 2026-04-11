@@ -1,5 +1,11 @@
 # @ultima-zebar/typescript
 
+## 1.0.6
+
+### Patch Changes
+
+- [`306f463`](https://github.com/mushfikurr/overline-zebar/commit/306f463b79a0901fd32c2d70b6b1da6404db6683) Thanks [@gidragir](https://github.com/gidragir)! - fix
+
 ## 1.0.5
 
 ### Patch Changes
