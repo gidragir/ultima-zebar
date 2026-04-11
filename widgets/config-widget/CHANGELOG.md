@@ -1,5 +1,15 @@
 # @ultima-zebar/config-widget
 
+## 1.0.7
+
+### Patch Changes
+
+- [`f48ae7e`](https://github.com/mushfikurr/overline-zebar/commit/f48ae7eea96b2176b9a236dfa8013bd06198ff41) Thanks [@gidragir](https://github.com/gidragir)! - fix
+
+- Updated dependencies [[`f48ae7e`](https://github.com/mushfikurr/overline-zebar/commit/f48ae7eea96b2176b9a236dfa8013bd06198ff41)]:
+  - @ultima-zebar/config@1.0.7
+  - @ultima-zebar/ui@1.0.7
+
 ## 1.0.6
 
 ### Patch Changes
