@@ -1,7 +1,7 @@
 {
 	"name": "@ultima-zebar/main",
 	"private": true,
-	"version": "1.0.7",
+	"version": "1.1.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
