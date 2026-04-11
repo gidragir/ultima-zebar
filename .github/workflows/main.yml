@@ -29,8 +29,8 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "25.8.1"
-                  cache: "pnpm"
+                  node-version: '25.8.1'
+                  cache: 'pnpm'
 
             - name: Install dependencies
               run: pnpm install
@@ -48,8 +48,8 @@ jobs:
               uses: changesets/action@v1
               with:
                   version: pnpm run version-packages
-                  commit: "chore(release): version packages"
-                  title: "chore(release): version packages"
+                  commit: 'chore(release): version packages'
+                  title: 'chore(release): version packages'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -62,7 +62,7 @@ jobs:
 
             - name: Lint and Format Check
               if: steps.changesets.outputs.hasChangesets == 'false'
-              run: pnpm run lint && pnpm run check-format
+              run: pnpm biome check .
 
             - name: Build project
               if: steps.changesets.outputs.hasChangesets == 'false'

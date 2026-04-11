@@ -8,7 +8,6 @@
 		"build": "vite build",
 		"build:watch": "vite build --watch",
 		"format": "biome format --write .",
-		"check-format": "biome format --check .",
 		"lint": "biome check .",
 		"preview": "vite preview"
 	},
