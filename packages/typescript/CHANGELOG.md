@@ -1,5 +1,11 @@
 # @ultima-zebar/typescript
 
+## 1.0.3
+
+### Patch Changes
+
+- [`ff7cd44`](https://github.com/mushfikurr/overline-zebar/commit/ff7cd4424519868788ce98e0bac688ec9a8f137e) Thanks [@gidragir](https://github.com/gidragir)! - fix biome errors
+
 ## 1.0.2
 
 ### Patch Changes
