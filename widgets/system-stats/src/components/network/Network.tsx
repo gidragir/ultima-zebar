@@ -55,8 +55,9 @@ export default function Network({ network }: NetworkPanelProps) {
 
 	return (
 		<PanelLayout
-			title={`Network: ${defaultInterface.friendlyName || defaultInterface.name
-				}`}
+			title={`Network: ${
+				defaultInterface.friendlyName || defaultInterface.name
+			}`}
 			className="space-y-6"
 		>
 			<Traffic traffic={network.traffic} />

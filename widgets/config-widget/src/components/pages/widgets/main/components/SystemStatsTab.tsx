@@ -1,7 +1,4 @@
-import {
-	type ProviderSettings,
-	useWidgetSetting,
-} from "@ultima-zebar/config";
+import { type ProviderSettings, useWidgetSetting } from "@ultima-zebar/config";
 import {
 	FieldDescription,
 	FieldInput,

@@ -5,8 +5,7 @@
 	"main": "./src/index.ts",
 	"scripts": {
 		"lint": "biome check .",
-		"format": "biome format --write .",
-		"check-format": "biome format --check ."
+		"format": "biome format --write ."
 	},
 	"dependencies": {
 		"@tauri-apps/api": "catalog:",

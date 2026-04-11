@@ -18,9 +18,9 @@ interface ThresholdsInputProps {
 	thresholds?: Threshold[];
 	onChange?: (thresholds: Threshold[]) => void;
 	settingKey?:
-	| "weatherThresholds"
-	| "systemStatThresholds"
-	| "batteryThresholds";
+		| "weatherThresholds"
+		| "systemStatThresholds"
+		| "batteryThresholds";
 }
 
 export function ThresholdsInput({

@@ -3,8 +3,7 @@
 	"version": "1.0.0",
 	"scripts": {
 		"lint": "biome check .",
-		"format": "biome format --write .",
-		"check-format": "biome format --check ."
+		"format": "biome format --write ."
 	},
 	"publishConfig": {
 		"access": "public"
