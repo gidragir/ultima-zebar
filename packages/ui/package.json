@@ -1,48 +1,44 @@
 {
-  "name": "@ultima-zebar/ui",
-  "version": "1.0.2",
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "files": [
-    "dist"
-  ],
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./fonts.css": "./src/fonts.css",
-    "./index.css": "./dist/index.css",
-    "./theme.css": "./src/theme.css"
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc && tailwindcss -i ./src/index.css -o ./dist/index.css",
-    "check-types": "tsc --noEmit",
-    "dev": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
-    "lint": "biome check src"
-  },
-  "dependencies": {
-    "@base-ui-components/react": "1.0.0-beta.2",
-    "@ultima-zebar/config": "workspace:*",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "catalog:",
-    "lucide-react": "catalog:",
-    "motion": "catalog:",
-    "react": "catalog:",
-    "react-colorful": "^5.6.1",
-    "react-dom": "catalog:",
-    "tailwind-merge": "catalog:"
-  },
-  "devDependencies": {
-    "@ultima-zebar/typescript": "workspace:*",
-    "@tsconfig/recommended": "catalog:",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript": "catalog:"
-  }
+	"name": "@ultima-zebar/ui",
+	"version": "1.0.2",
+	"sideEffects": ["**/*.css"],
+	"files": ["dist"],
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./fonts.css": "./src/fonts.css",
+		"./index.css": "./dist/index.css",
+		"./theme.css": "./src/theme.css"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc && tailwindcss -i ./src/index.css -o ./dist/index.css",
+		"check-types": "tsc --noEmit",
+		"dev": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
+		"lint": "biome check src"
+	},
+	"dependencies": {
+		"@base-ui-components/react": "1.0.0-beta.2",
+		"@ultima-zebar/config": "workspace:*",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "catalog:",
+		"lucide-react": "catalog:",
+		"motion": "catalog:",
+		"react": "catalog:",
+		"react-colorful": "^5.6.1",
+		"react-dom": "catalog:",
+		"tailwind-merge": "catalog:"
+	},
+	"devDependencies": {
+		"@ultima-zebar/typescript": "workspace:*",
+		"@tsconfig/recommended": "catalog:",
+		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@types/react-dom": "catalog:",
+		"tailwindcss": "catalog:",
+		"typescript": "catalog:"
+	}
 }

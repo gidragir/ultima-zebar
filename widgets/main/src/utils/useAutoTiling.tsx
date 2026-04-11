@@ -1,5 +1,5 @@
-import { useAppSetting } from "@ultima-zebar/config";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAppSetting } from "@ultima-zebar/config";
 import { useEffect } from "react";
 
 export const useAutoTiling = () => {
