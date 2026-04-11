@@ -7,7 +7,7 @@
 	"types": "./src/index.ts",
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build --",
 		"build:watch": "vite build --watch",
 		"lint": "biome check --fix .",
 		"format": "biome format --write .",
