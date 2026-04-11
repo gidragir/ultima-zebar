@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"name": "@ultima-zebar/typescript",
 	"version": "0.0.0",
 	"scripts": {
@@ -9,4 +10,16 @@
 	"publishConfig": {
 		"access": "public"
 	}
+=======
+    "name": "@ultima-zebar/typescript",
+    "version": "1.0.0",
+    "scripts": {
+        "lint": "biome check .",
+        "format": "biome format --write .",
+        "check-format": "biome format --check ."
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+>>>>>>> 933547bcdd2f060dfa2d9f448cf9d4d8a24c45ea
 }
