@@ -19,9 +19,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc && tailwindcss -i ./src/index.css -o ./dist/index.css",
     "check-types": "tsc --noEmit",
-    "dev": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
+    "build": "pnpm build:types && pnpm build:css",
+    "build:types": "tsc",
+    "build:css": "node -e \"const fs = require('fs'); const path = require('path'); fs.mkdirSync('dist', {recursive: true}); fs.copyFileSync('src/index.css', 'dist/index.css'); fs.copyFileSync('src/theme.css', 'dist/theme.css'); fs.copyFileSync('src/fonts.css', 'dist/fonts.css');\"",
+    "dev": "echo 'CSS is copied during build'",
     "lint": "biome check --fix src",
     "format": "biome format --write src"
   },
