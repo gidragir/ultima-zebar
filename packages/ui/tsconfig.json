@@ -1,9 +1,9 @@
 {
-  "extends": "@overline-zebar/typescript/react-library.json",
-  "include": ["src", "types"],
-  "exclude": ["dist", "build", "node_modules"],
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"extends": "@ultima-zebar/typescript/react-library.json",
+	"include": ["src", "types"],
+	"exclude": ["dist", "build", "node_modules"],
+	"compilerOptions": {
+		"outDir": "dist"
+	},
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

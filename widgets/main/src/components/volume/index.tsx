@@ -1,1 +1,1 @@
-export { default } from './VolumeControl';
+export { default } from "./VolumeControl";

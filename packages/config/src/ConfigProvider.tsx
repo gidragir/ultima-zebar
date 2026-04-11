@@ -1,25 +1,26 @@
-import React, { useEffect, useReducer } from 'react';
+import type React from "react";
+import { useEffect, useReducer } from "react";
 import {
-  ConfigDispatchContext,
-  configReducer,
-  ConfigStateContext,
-} from './ConfigReducer';
-import { configService } from './ConfigService';
-import { defaultConfig } from './defaults/default-config';
-import { useConfigChangeIpc } from './ipc/hooks/useConfigChangeIpc';
-import { useThemePreviewIpc } from './ipc/hooks/useThemePreviewIpc';
-import { deepMerge } from './utils/deepMerge';
-import { RootConfigSchema } from './zod-types';
+	ConfigDispatchContext,
+	ConfigStateContext,
+	configReducer,
+} from "./ConfigReducer";
+import { configService } from "./ConfigService";
+import { defaultConfig } from "./defaults/default-config";
+import { useConfigChangeIpc } from "./ipc/hooks/useConfigChangeIpc";
+import { useThemePreviewIpc } from "./ipc/hooks/useThemePreviewIpc";
+import { deepMerge } from "./utils/deepMerge";
+import { RootConfigSchema } from "./zod-types";
 
 const getInitialState = () => {
-  const loaded = configService.loadConfig();
-  const validation = RootConfigSchema.safeParse(loaded);
-  if (validation.success) {
-    return validation.data;
-  } else {
-    const mergedConfig = deepMerge(defaultConfig, loaded);
-    return mergedConfig;
-  }
+	const loaded = configService.loadConfig();
+	const validation = RootConfigSchema.safeParse(loaded);
+	if (validation.success) {
+		return validation.data;
+	} else {
+		const mergedConfig = deepMerge(defaultConfig, loaded);
+		return mergedConfig;
+	}
 };
 
 /*
@@ -28,37 +29,37 @@ const getInitialState = () => {
  */
 
 export const ConfigProvider: React.FC<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }> = ({ children }) => {
-  const [state, dispatch] = useReducer(configReducer, getInitialState());
+	const [state, dispatch] = useReducer(configReducer, getInitialState());
 
-  // Register IPC hooks
-  useThemePreviewIpc(state);
-  useConfigChangeIpc(dispatch);
+	// Register IPC hooks
+	useThemePreviewIpc(state);
+	useConfigChangeIpc(dispatch);
 
-  // Sync radius changes to the document to ALL widgets
-  // TODO: Integrate with theme
-  useEffect(() => {
-    document.documentElement.style.setProperty('--radius', state.app.radius);
-  }, [state.app.radius]);
+	// Sync radius changes to the document to ALL widgets
+	// TODO: Integrate with theme
+	useEffect(() => {
+		document.documentElement.style.setProperty("--radius", state.app.radius);
+	}, [state.app.radius]);
 
-  // Sync theme changes to the document to ALL widgets
-  useEffect(() => {
-    const theme = state.app.themes.find(
-      (t) => t.id === state.app.currentThemeId
-    );
-    if (theme) {
-      Object.entries(theme.colors).forEach(([key, value]) => {
-        document.documentElement.style.setProperty(key, value);
-      });
-    }
-  }, [state.app.currentThemeId, state.app.themes]);
+	// Sync theme changes to the document to ALL widgets
+	useEffect(() => {
+		const theme = state.app.themes.find(
+			(t) => t.id === state.app.currentThemeId,
+		);
+		if (theme) {
+			Object.entries(theme.colors).forEach(([key, value]) => {
+				document.documentElement.style.setProperty(key, value);
+			});
+		}
+	}, [state.app.currentThemeId, state.app.themes]);
 
-  return (
-    <ConfigStateContext.Provider value={state}>
-      <ConfigDispatchContext.Provider value={dispatch}>
-        {children}
-      </ConfigDispatchContext.Provider>
-    </ConfigStateContext.Provider>
-  );
+	return (
+		<ConfigStateContext.Provider value={state}>
+			<ConfigDispatchContext.Provider value={dispatch}>
+				{children}
+			</ConfigDispatchContext.Provider>
+		</ConfigStateContext.Provider>
+	);
 };

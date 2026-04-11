@@ -1,75 +1,93 @@
-name: Deploy
+name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version number for release"
-        required: true
-        default: "v1.0.0"
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  build-and-deploy:
+  release:
+    name: Release
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v4
         with:
-          node-version: "21.2.0"
+          fetch-depth: 0
 
-      # Install dependencies
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "25.8.1"
+          cache: "pnpm"
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      # Run build to generate the dist folder
-      - name: Build project
-        run: npm run build
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
 
-      # Create release folder structure
-      - name: Create release folder structure
-        run: |
-          mkdir -p overline-zebar/dist
-          cp -r dist/* overline-zebar/dist/
-          cp overline.zebar.json overline-zebar/overline.zebar.json
-          cp public/release-config.json overline-zebar/dist/config.json
-          rm -f overline-zebar/dist/release-config.json
-
-      # Zip the release folder
-      - name: Zip release folder
-        run: zip -r overline-zebar.zip overline-zebar
-
-      # Create GitHub Release with the specified version
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create Release Pull Request or Tag
+        id: changesets
+        uses: actions/changesets@v1
+        with:
+          version: pnpm run version-packages
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get version
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./packages/config/package.json').version")
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Lint and Format Check
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: pnpm run lint && pnpm run check-format
+
+      - name: Build project
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: pnpm run build -- --cache-dir=".turbo"
+
+      - name: Create release folder structure
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          mkdir -p ultima-zebar/dist
+          cp -r dist/* ultima-zebar/dist/ 2>/dev/null || true
+          cp overline.zebar.json ultima-zebar/overline.zebar.json 2>/dev/null || true
+          cp public/release-config.json ultima-zebar/dist/config.json 2>/dev/null || true
+          rm -f ultima-zebar/dist/release-config.json
+
+      - name: Zip release folder
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: zip -r ultima-zebar.zip ultima-zebar
+
+      - name: Create GitHub Release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: Release ${{ github.event.inputs.version }}
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
+          files: ultima-zebar.zip
           draft: false
           prerelease: false
-
-      # Upload Release Asset
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./overline-zebar.zip
-          asset_name: overline-zebar.zip
-          asset_content_type: application/zip
-
-      # Upload the dist folder as an artifact after the build (keeping this for reference)
-      - name: Upload dist folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
+          generate_release_notes: true

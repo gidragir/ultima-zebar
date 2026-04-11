@@ -1,5 +1,5 @@
-import { GlazeWmOutput } from 'zebar';
+import { GlazeWmOutput } from "zebar";
 
 declare interface CommandProps {
-  glazewm: GlazeWmOutput | null;
+	glazewm: GlazeWmOutput | null;
 }

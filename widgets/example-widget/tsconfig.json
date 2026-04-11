@@ -1,5 +1,5 @@
 {
-  "extends": "@overline-zebar/typescript/vite.json",
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"extends": "@ultima-zebar/typescript/vite.json",
+	"include": ["src"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

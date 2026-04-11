@@ -1,16 +1,16 @@
-import React from 'react';
-import { MediaOutput } from 'zebar';
-import { cn } from '../../utils/cn';
-import { ConditionalPanel } from '../common/ConditionalPanel';
-import { ProgressBar } from './components/ProgressBar';
-import { Status } from './components/Status';
-import { TitleDetails } from './components/TitleDetails';
-import { Chip } from '@overline-zebar/ui';
+import { Chip } from "@ultima-zebar/ui";
+import React from "react";
+import type { MediaOutput } from "zebar";
+import { cn } from "../../utils/cn";
+import { ConditionalPanel } from "../common/ConditionalPanel";
+import { ProgressBar } from "./components/ProgressBar";
+import { Status } from "./components/Status";
+import { TitleDetails } from "./components/TitleDetails";
 
 export const TitleDetailsMemo = React.memo(TitleDetails);
 
 type MediaProps = {
-  media: MediaOutput | null;
+	media: MediaOutput | null;
 };
 // To allow cycling of Media sessions with Alt+Click we have to handle our own current session
 // This is why there are two current sessions defined here:
@@ -18,74 +18,75 @@ type MediaProps = {
 // currentSession: Our own local state of Zebar session.
 // This is not ideal and hopefully future Zebar releases will provide a way to change sessions internally.
 export default function Media({ media }: MediaProps) {
-  if (!media) return;
-  const {
-    allSessions,
-    togglePlayPause,
-    next,
-    previous,
-    currentSession: zebarCurrentSession,
-  } = media;
-  const zebarCurrentSessionIdx = allSessions.findIndex(
-    (s) => s.sessionId === zebarCurrentSession?.sessionId
-  );
-  const [currentSessionIdx, setCurrentSessionIdx] = React.useState<number>(
-    zebarCurrentSessionIdx === -1 ? 0 : zebarCurrentSessionIdx
-  );
-  const currentSession = allSessions[currentSessionIdx];
+	const [currentSessionIdx, setCurrentSessionIdx] = React.useState<number>(0);
 
-  const handlePlayPause = (e: React.MouseEvent, currentSessionIdx: number) => {
-    const currentSession = allSessions[currentSessionIdx];
+	const allSessions = media?.allSessions ?? [];
+	const zebarCurrentSession = media?.currentSession;
 
-    if (e.shiftKey) {
-      previous({ sessionId: currentSession?.sessionId });
-      return;
-    }
+	const zebarCurrentSessionIdx = allSessions.findIndex(
+		(s) => s.sessionId === zebarCurrentSession?.sessionId,
+	);
 
-    if (e.ctrlKey) {
-      next({ sessionId: currentSession?.sessionId });
-      return;
-    }
+	React.useEffect(() => {
+		if (zebarCurrentSessionIdx !== -1) {
+			setCurrentSessionIdx(zebarCurrentSessionIdx);
+		}
+	}, [zebarCurrentSessionIdx]);
 
-    if (e.altKey) {
-      if (currentSessionIdx < allSessions.length - 1) {
-        setCurrentSessionIdx((prev) => prev + 1);
-      } else {
-        setCurrentSessionIdx(0);
-      }
-      return;
-    }
+	const currentSession = allSessions[currentSessionIdx];
 
-    if (currentSession) {
-      togglePlayPause({ sessionId: currentSession.sessionId });
-    }
-  };
+	const handlePlayPause = (e: React.MouseEvent) => {
+		if (!media || !currentSession) return;
 
-  return (
-    <button
-      className={
-        'flex gap-2 select-none cursor-pointer outline-none relative h-full'
-      }
-      onClick={(e) => {
-        handlePlayPause(e, currentSessionIdx);
-      }}
-    >
-      <ConditionalPanel sessionActive={!!currentSession}>
-        <Chip
-          className={cn(
-            'relative flex gap-2 select-none cursor-pointer overflow-clip group',
-            'active:bg-background-deeper/90'
-          )}
-        >
-          <Status isPlaying={currentSession?.isPlaying ?? false} />
-          <TitleDetails
-            title={currentSession?.title}
-            artist={currentSession?.artist}
-          />
+		const { togglePlayPause, next, previous } = media;
 
-          <ProgressBar currentSession={currentSession} />
-        </Chip>
-      </ConditionalPanel>
-    </button>
-  );
+		if (e.shiftKey) {
+			previous({ sessionId: currentSession.sessionId });
+			return;
+		}
+
+		if (e.ctrlKey) {
+			next({ sessionId: currentSession.sessionId });
+			return;
+		}
+
+		if (e.altKey) {
+			if (currentSessionIdx < allSessions.length - 1) {
+				setCurrentSessionIdx((prev) => prev + 1);
+			} else {
+				setCurrentSessionIdx(0);
+			}
+			return;
+		}
+
+		togglePlayPause({ sessionId: currentSession.sessionId });
+	};
+
+	return (
+		<ConditionalPanel sessionActive={!!media && !!currentSession}>
+			<button
+				type="button"
+				className={cn(
+					"flex gap-2 select-none cursor-pointer outline-none relative h-full",
+					"transition-transform active:scale-95 duration-200",
+				)}
+				onClick={handlePlayPause}
+			>
+				<Chip
+					className={cn(
+						"relative flex gap-2 select-none cursor-pointer overflow-clip group",
+						"active:bg-background-deeper/90",
+					)}
+				>
+					<Status isPlaying={currentSession?.isPlaying ?? false} />
+					<TitleDetails
+						title={currentSession?.title}
+						artist={currentSession?.artist}
+					/>
+
+					<ProgressBar currentSession={currentSession} />
+				</Chip>
+			</button>
+		</ConditionalPanel>
+	);
 }

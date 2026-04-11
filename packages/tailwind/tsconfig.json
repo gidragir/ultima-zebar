@@ -1,8 +1,0 @@
-{
-  "extends": "@overline-zebar/typescript/base.json",
-  "compilerOptions": {
-    "composite": true
-  },
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
-}

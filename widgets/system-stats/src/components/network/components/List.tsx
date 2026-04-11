@@ -1,25 +1,25 @@
-import { CopyToClipboard } from '@/components/common/CopyToClipboard';
+import { CopyToClipboard } from "@/components/common/CopyToClipboard";
 
 type Props = {
-  ips: string[];
+	ips: string[];
 };
 
 export default function List({ ips }: Props) {
-  return (
-    <>
-      {ips.length > 0 ? (
-        ips.map((ip) => (
-          <CopyToClipboard
-            textToCopy={ip}
-            key={ip}
-            className="break-all whitespace-normal"
-          >
-            {ip}
-          </CopyToClipboard>
-        ))
-      ) : (
-        <p>N/A</p>
-      )}
-    </>
-  );
+	return (
+		<>
+			{ips.length > 0 ? (
+				ips.map((ip) => (
+					<CopyToClipboard
+						textToCopy={ip}
+						key={ip}
+						className="break-all whitespace-normal"
+					>
+						{ip}
+					</CopyToClipboard>
+				))
+			) : (
+				<p>N/A</p>
+			)}
+		</>
+	);
 }

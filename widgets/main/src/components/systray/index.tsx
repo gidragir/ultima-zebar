@@ -1,1 +1,1 @@
-export { default } from './Systray';
+export { default } from "./Systray";

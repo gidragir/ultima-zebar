@@ -1,1 +1,1 @@
-export * from './components/UpdateScriptModal';
+export * from "./components/UpdateScriptModal";

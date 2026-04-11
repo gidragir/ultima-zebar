@@ -1,28 +1,27 @@
 {
-  "name": "overline-zebar",
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-unused-imports": "^4.1.4",
-    "prettier": "^3.0.0",
-    "syncpack": "14.0.0-alpha.12",
-    "typescript": "^5.8.3"
-  },
-  "private": true,
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "build": "pnpm --filter \"@overline-zebar/*\" build",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,html,yaml,vue,svelte,graphql}",
-    "check-format": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md,html,yaml,vue,svelte,graphql}\"",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix"
-  },
-  "dependencies": {
-    "react-compiler-runtime": "catalog:",
-    "use-debounce": "^10.0.5"
-  }
+    "name": "ultima-zebar",
+    "packageManager": "pnpm@10.33.0",
+    "devDependencies": {
+        "@biomejs/biome": "catalog:",
+        "@changesets/changelog-github": "^0.6.0",
+        "@changesets/cli": "^2.30.0",
+        "syncpack": "^14.0.0-alpha.12",
+        "turbo": "^2.9.6",
+        "typescript": "catalog:"
+    },
+    "private": true,
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "build": "turbo run build",
+        "format": "turbo run format",
+        "check-format": "turbo run check-format",
+        "lint": "turbo run lint",
+        "lint:fix": "turbo run lint:fix",
+        "changeset": "changeset",
+        "version-packages": "changeset version"
+    },
+    "dependencies": {
+        "react-compiler-runtime": "catalog:",
+        "use-debounce": "catalog:"
+    }
 }

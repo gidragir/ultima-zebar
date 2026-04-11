@@ -1,7 +1,7 @@
 interface EyeDropper {
-  open(): Promise<{ sRGBHex: string }>;
+	open(): Promise<{ sRGBHex: string }>;
 }
 
 interface Window {
-  EyeDropper?: new () => EyeDropper;
+	EyeDropper?: new () => EyeDropper;
 }

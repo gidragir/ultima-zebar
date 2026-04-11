@@ -1,37 +1,37 @@
-import React from 'react';
-import { GlazeWmOutput } from 'zebar';
-import { ConditionalPanel } from '../../common/ConditionalPanel';
-import { CopyProcessName } from './commands/CopyProcessName';
-import { ToggleFloating } from './commands/ToggleFloating';
-import { Chip } from '@overline-zebar/ui';
-import { ToggleFullscreen } from './commands/ToggleFullscreen';
+import { Chip } from "@ultima-zebar/ui";
+import React from "react";
+import type { GlazeWmOutput } from "zebar";
+import { ConditionalPanel } from "../../common/ConditionalPanel";
+import { CopyProcessName } from "./commands/CopyProcessName";
+import { ToggleFloating } from "./commands/ToggleFloating";
+import { ToggleFullscreen } from "./commands/ToggleFullscreen";
 
 interface WindowControlsProps {
-  show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  glazewm: GlazeWmOutput | null;
-  parentRef: React.ForwardedRef<HTMLButtonElement>;
+	show: boolean;
+	setShow: React.Dispatch<React.SetStateAction<boolean>>;
+	glazewm: GlazeWmOutput | null;
+	parentRef: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function WindowControls({ glazewm, ...props }: WindowControlsProps) {
-  const ref = React.useRef<HTMLButtonElement>(null);
+	const ref = React.useRef<HTMLButtonElement>(null);
 
-  return (
-    <ConditionalPanel sessionActive={props.show}>
-      <div className="py-1">
-        <Chip
-          as="button"
-          className="mx-2.5 h-full py-1"
-          ref={ref}
-          onClick={(e: React.MouseEvent) => {
-            e.stopPropagation();
-          }}
-        >
-          <ControlList glazewm={glazewm} />
-        </Chip>
-      </div>
-    </ConditionalPanel>
-  );
+	return (
+		<ConditionalPanel sessionActive={props.show}>
+			<div className="py-1">
+				<Chip
+					as="button"
+					className="mx-2.5 h-full py-1"
+					ref={ref}
+					onClick={(e: React.MouseEvent) => {
+						e.stopPropagation();
+					}}
+				>
+					<ControlList glazewm={glazewm} />
+				</Chip>
+			</div>
+		</ConditionalPanel>
+	);
 }
 
 /**
@@ -42,13 +42,13 @@ export function WindowControls({ glazewm, ...props }: WindowControlsProps) {
  * I am currently avoiding tracking any state locally and then replicating it to GlazeWM, as it could cause desync issues.
  */
 const ControlList = ({ glazewm }: { glazewm: GlazeWmOutput | null }) => {
-  const controls = [CopyProcessName, ToggleFloating, ToggleFullscreen];
+	const controls = [CopyProcessName, ToggleFloating, ToggleFullscreen];
 
-  return (
-    <div className="flex items-center h-full gap-1.5">
-      {controls.map((Control, idx) => (
-        <Control key={idx} glazewm={glazewm} />
-      ))}
-    </div>
-  );
+	return (
+		<div className="flex items-center h-full gap-1.5">
+			{controls.map((Control, idx) => (
+				<Control key={idx} glazewm={glazewm} />
+			))}
+		</div>
+	);
 };
