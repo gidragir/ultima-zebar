@@ -1,5 +1,14 @@
 # @ultima-zebar/ui
 
+## 1.0.5
+
+### Patch Changes
+
+- [`b83a099`](https://github.com/mushfikurr/overline-zebar/commit/b83a0992ce7c5fe385fa001d1c2d08e114fd1562) Thanks [@gidragir](https://github.com/gidragir)! - fix biome check errors
+
+- Updated dependencies [[`b83a099`](https://github.com/mushfikurr/overline-zebar/commit/b83a0992ce7c5fe385fa001d1c2d08e114fd1562)]:
+  - @ultima-zebar/config@1.0.5
+
 ## 1.0.4
 
 ### Patch Changes
