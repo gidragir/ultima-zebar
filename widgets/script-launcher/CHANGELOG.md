@@ -1,5 +1,16 @@
 # @ultima-zebar/script-launcher
 
+## 1.0.2
+
+### Patch Changes
+
+- [`529eba2`](https://github.com/mushfikurr/overline-zebar/commit/529eba26051a8069e1a822c51a52eab0bdc2faba) Thanks [@gidragir](https://github.com/gidragir)! - format
+
+- Updated dependencies [[`529eba2`](https://github.com/mushfikurr/overline-zebar/commit/529eba26051a8069e1a822c51a52eab0bdc2faba)]:
+  - @ultima-zebar/config-widget@1.0.2
+  - @ultima-zebar/config@1.0.2
+  - @ultima-zebar/ui@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
