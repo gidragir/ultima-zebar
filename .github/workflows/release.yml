@@ -57,7 +57,7 @@ jobs:
               if: steps.changesets.outputs.hasChangesets == 'false'
               id: get_version
               run: |
-                  VERSION=$(node -p "require('./packages/config/package.json').version")
+                  VERSION=$(node -p "require('./package.json').version")
                   echo "version=v$VERSION" >> $GITHUB_OUTPUT
 
             - name: Build project
@@ -67,15 +67,29 @@ jobs:
             - name: Create release folder structure
               if: steps.changesets.outputs.hasChangesets == 'false'
               run: |
-                  mkdir -p ultima-zebar/dist
-                  cp -r dist/* ultima-zebar/dist/ 2>/dev/null || true
-                  cp overline.zebar.json ultima-zebar/overline.zebar.json 2>/dev/null || true
-                  cp public/release-config.json ultima-zebar/dist/config.json 2>/dev/null || true
-                  rm -f ultima-zebar/dist/release-config.json
+                  # Update version in zpack.json based on root package.json
+                  VERSION=$(node -p "require('./package.json').version")
+                  jq ".version = \"$VERSION\"" zpack.json > zpack.tmp.json && mv zpack.tmp.json zpack.json
+                  
+                  # Create release build directory
+                  mkdir -p release_build/widgets
+                  cp zpack.json release_build/
+                  
+                  # Copy all widget dist folders
+                  for dir in widgets/*; do
+                      if [ -d "$dir/dist" ]; then
+                          widget_name=$(basename "$dir")
+                          mkdir -p "release_build/widgets/$widget_name"
+                          cp -r "$dir/dist" "release_build/widgets/$widget_name/"
+                      fi
+                  done
 
             - name: Zip release folder
               if: steps.changesets.outputs.hasChangesets == 'false'
-              run: zip -r ultima-zebar.zip ultima-zebar
+              run: |
+                  cd release_build
+                  zip -r ../ultima-zebar.zip *
+                  cd ..
 
             - name: Create GitHub Release
               if: steps.changesets.outputs.hasChangesets == 'false'
