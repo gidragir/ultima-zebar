@@ -1,5 +1,15 @@
 # @ultima-zebar/main
 
+## 1.1.3
+
+### Patch Changes
+
+- [`f876b2a`](https://github.com/mushfikurr/overline-zebar/commit/f876b2a476de9710089e2b6caf63ff538b1fb0a4) Thanks [@gidragir](https://github.com/gidragir)! - Update release CI for better zip archive
+
+- Updated dependencies [[`f876b2a`](https://github.com/mushfikurr/overline-zebar/commit/f876b2a476de9710089e2b6caf63ff538b1fb0a4)]:
+  - @ultima-zebar/config@1.1.3
+  - @ultima-zebar/ui@1.1.3
+
 ## 1.1.2
 
 ### Patch Changes
