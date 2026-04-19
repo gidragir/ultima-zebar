@@ -1,5 +1,14 @@
 # @ultima-zebar/ui
 
+## 1.1.2
+
+### Patch Changes
+
+- [`6139f72`](https://github.com/mushfikurr/overline-zebar/commit/6139f724e280efa3b54e00e878a7009be86a5f91) Thanks [@gidragir](https://github.com/gidragir)! - fix
+
+- Updated dependencies [[`6139f72`](https://github.com/mushfikurr/overline-zebar/commit/6139f724e280efa3b54e00e878a7009be86a5f91)]:
+  - @ultima-zebar/config@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes
