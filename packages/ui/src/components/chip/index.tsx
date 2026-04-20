@@ -14,11 +14,7 @@ export const Chip = React.forwardRef<HTMLElement, ChipProps>(
 	({ as: Component = "div", className, children, ...props }, ref) => {
 		const Element = Component as React.ElementType;
 		return (
-			<Element
-				ref={ref}
-				className={cn(chipStyles, className)}
-				{...props}
-			>
+			<Element ref={ref} className={cn(chipStyles, className)} {...props}>
 				{children}
 			</Element>
 		);

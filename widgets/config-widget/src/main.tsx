@@ -1,7 +1,5 @@
 import { ConfigProvider } from "@ultima-zebar/config";
-import "@ultima-zebar/ui/fonts.css";
 import "@ultima-zebar/ui/index.css";
-import "@ultima-zebar/ui/theme.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";

@@ -306,52 +306,6 @@ importers:
         specifier: 'catalog:'
         version: 8.0.0(vite@8.0.8(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.0))
 
-  widgets/example-widget:
-    dependencies:
-      '@ultima-zebar/config':
-        specifier: workspace:*
-        version: link:../../packages/config
-      '@ultima-zebar/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      react:
-        specifier: 'catalog:'
-        version: 19.2.5
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.2.5(react@19.2.5)
-      zebar:
-        specifier: 'catalog:'
-        version: 3.3.1(ws@7.5.10)
-    devDependencies:
-      '@tailwindcss/vite':
-        specifier: 'catalog:'
-        version: 4.2.2(vite@8.0.8(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.0))
-      '@types/node':
-        specifier: 'catalog:'
-        version: 25.6.0
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.14
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.2.3(@types/react@19.2.14)
-      '@ultima-zebar/typescript':
-        specifier: workspace:*
-        version: link:../../packages/typescript
-      '@vitejs/plugin-react':
-        specifier: 'catalog:'
-        version: 6.0.1(babel-plugin-react-compiler@1.0.0)(vite@8.0.8(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.0))
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.2.2
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.2
-      vite:
-        specifier: 'catalog:'
-        version: 8.0.8(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.0)
-
   widgets/main:
     dependencies:
       '@radix-ui/react-slider':
