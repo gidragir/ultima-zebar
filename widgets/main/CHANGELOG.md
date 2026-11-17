@@ -1,5 +1,17 @@
 # @ultima-zebar/main
 
+## 1.3.0
+
+### Minor Changes
+
+- [`8cfc81d`](https://github.com/gidragir/ultima-zebar/commit/8cfc81ddbe3b7c2ddceb5b9dc5e0b1500cff24d4) Thanks [@gidragir](https://github.com/gidragir)! - Show the current keyboard language to the left of CPU and RAM in the bar, with a "Keyboard Language" provider toggle in settings
+
+### Patch Changes
+
+- Updated dependencies [[`8cfc81d`](https://github.com/gidragir/ultima-zebar/commit/8cfc81ddbe3b7c2ddceb5b9dc5e0b1500cff24d4)]:
+  - @ultima-zebar/config@1.3.0
+  - @ultima-zebar/ui@1.3.0
+
 ## 1.2.1
 
 ### Patch Changes
