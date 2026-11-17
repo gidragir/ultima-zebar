@@ -31,6 +31,7 @@ export function SystrayItem({ icon, systray }: SystrayItemProps) {
 	return (
 		<button
 			type="button"
+			className="active:scale-[0.97] transition-transform duration-150 ease-out"
 			onMouseDown={(e) => handleClick(e)}
 			// Toggle firing right click event so it can use the trayicons one
 			onContextMenu={(e) => {

@@ -6,9 +6,9 @@ import type { AudioOutput } from "zebar";
 import Slider from "./components/Slider";
 
 const sliderReveal: SwapAnimation = {
-	initial: { width: 0, marginLeft: 0, opacity: 0 },
-	animate: { width: "auto", marginLeft: "6px", opacity: 1 },
-	exit: { width: 0, marginLeft: 0, opacity: 0 },
+	initial: { width: 0, opacity: 0 },
+	animate: { width: "auto", opacity: 1 },
+	exit: { width: 0, opacity: 0 },
 	transition: { type: "spring", duration: 0.3, bounce: 0 },
 };
 
@@ -88,7 +88,7 @@ export default function VolumeControl({
 			onClick={handleClick}
 			onWheel={handleWheel}
 			onDoubleClick={handleDoubleClick}
-			className="outline-none"
+			className="outline-none active:bg-background-deeper/90"
 		>
 			<div className="flex items-center">
 				<div>{renderIcon()}</div>
@@ -96,7 +96,7 @@ export default function VolumeControl({
 				<div>
 					<AnimatePresence initial={false}>
 						{expanded && (
-							<motion.div {...sliderReveal} className="overflow-hidden">
+							<motion.div {...sliderReveal} className="overflow-hidden ps-1.5">
 								<Slider value={playbackDevice.volume} setValue={setVolume} />
 							</motion.div>
 						)}

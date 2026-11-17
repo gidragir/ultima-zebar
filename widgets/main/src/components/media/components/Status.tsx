@@ -1,4 +1,4 @@
-import { iconSwap } from "@ultima-zebar/ui";
+import { iconFeedback, iconSwap } from "@ultima-zebar/ui";
 import { ArrowDownUp, Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { usePlayPause } from "../../../utils/usePlayPause";
@@ -23,7 +23,7 @@ export function Status({ isPlaying }: { isPlaying: boolean }) {
 
 	return (
 		<AnimatePresence mode="popLayout">
-			<motion.div key={key} {...iconSwap}>
+			<motion.div key={key} {...iconSwap} {...iconFeedback}>
 				<PlayPauseIcon LucideIcon={icon} />
 			</motion.div>
 		</AnimatePresence>

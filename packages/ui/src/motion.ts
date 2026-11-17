@@ -30,13 +30,13 @@ export const iconFeedback: Pick<
 	HTMLMotionProps<"div">,
 	"whileHover" | "whileTap"
 > = {
-	whileTap: { scale: 0.9 },
+	whileTap: { scale: 0.97 },
 };
 
 export const textSwap: SwapAnimation = {
-	initial: { opacity: 0, y: -3 },
+	initial: { opacity: 0, y: -2 },
 	animate: { opacity: 1, y: 0 },
-	exit: { opacity: 0, y: 3 },
+	exit: { opacity: 0, y: 2 },
 	transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] },
 };
 
