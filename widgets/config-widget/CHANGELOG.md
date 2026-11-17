@@ -1,5 +1,49 @@
 # @ultima-zebar/config-widget
 
+## 1.2.0
+
+### Minor Changes
+
+- [`190ff10`](https://github.com/gidragir/ultima-zebar/commit/190ff10f814c4b8ebed59f96e631d0652c7c9493) Thanks [@gidragir](https://github.com/gidragir)! - Add a font picker that applies the chosen font to all widgets
+
+- [`32b2a63`](https://github.com/gidragir/ultima-zebar/commit/32b2a638d6e8e62ae4dd5b0717d993dfd5022da4) Thanks [@gidragir](https://github.com/gidragir)! - Add Nord and Nord Light themes and bump the default top bar height to 36px
+
+- [`30693a6`](https://github.com/gidragir/ultima-zebar/commit/30693a67c31e05c2c7edcdf3900f429b0fe7498f) Thanks [@gidragir](https://github.com/gidragir)! - Add reset-to-default buttons to settings and a range slider for stat thresholds
+
+- [`1de64c4`](https://github.com/gidragir/ultima-zebar/commit/1de64c49b31fc93f912560548fc4e74c7d594fcd) Thanks [@gidragir](https://github.com/gidragir)! - Add a theme picker with Windows light/dark sync and a toggle to hide the system tray
+
+- [`b7db0cd`](https://github.com/gidragir/ultima-zebar/commit/b7db0cd27c57ffb6543ead676b10f1e35e2a42b3) Thanks [@gidragir](https://github.com/gidragir)! - Allow setting a custom weather location by latitude and longitude
+
+- [`8f8a0fe`](https://github.com/gidragir/ultima-zebar/commit/8f8a0fe301ce09dcd545690f6f9b285e5ff3d4cc) Thanks [@gidragir](https://github.com/gidragir)! - Add window effects setting (acrylic, blur, mica) and translucent theme colours
+
+- [`380b8e7`](https://github.com/gidragir/ultima-zebar/commit/380b8e7e9587107a54e367e40c2caf6bc8d7bc24) Thanks [@gidragir](https://github.com/gidragir)! - Dim and disable window manager controls while GlazeWM is paused
+
+### Patch Changes
+
+- [`ed0fe2e`](https://github.com/gidragir/ultima-zebar/commit/ed0fe2e74cae30a838f8e87a1f950176b75ce199) Thanks [@gidragir](https://github.com/gidragir)! - Polish press feedback and select inputs, animate window title swaps by direction
+
+- [`9401cf2`](https://github.com/gidragir/ultima-zebar/commit/9401cf22d1b2f8f6ee1471729bec798c6c1ff03a) Thanks [@gidragir](https://github.com/gidragir)! - Restart zebar.exe detached after builds so the build does not hang
+
+- [`b7a984c`](https://github.com/gidragir/ultima-zebar/commit/b7a984c5b6835c2c4627b1d5754fda65e8af5fe2) Thanks [@gidragir](https://github.com/gidragir)! - Remove the flow launcher path setting
+
+- [`ae25535`](https://github.com/gidragir/ultima-zebar/commit/ae2553542f4ee31ab3d0cea0487902e0f300ea9a) Thanks [@gidragir](https://github.com/gidragir)! - Commit number input edits on blur and when the config window closes
+
+- [`7429781`](https://github.com/gidragir/ultima-zebar/commit/7429781affb4d01533c33e30ccf517e50a3f11b1) Thanks [@gidragir](https://github.com/gidragir)! - Rework settings layout with translucent surfaces and a searchable system tray table
+
+- [`212f6a1`](https://github.com/gidragir/ultima-zebar/commit/212f6a1eddac1f1a5bf2cd052e58ec61aa99ae7e) Thanks [@gidragir](https://github.com/gidragir)! - Share animation tokens across widgets and switch to the motion package
+
+- [`ea33ef6`](https://github.com/gidragir/ultima-zebar/commit/ea33ef63eebadc02af38e45206ce4b80ac8e89c9) Thanks [@gidragir](https://github.com/gidragir)! - Smoother panel and window title transitions, stable workspace ordering
+
+- [`591c1c6`](https://github.com/gidragir/ultima-zebar/commit/591c1c6f4934d8344d3d88d67f7cff6a6daaa924) Thanks [@gidragir](https://github.com/gidragir)! - Keep the thresholds editor in sync with the stored config
+
+- [`f5112c9`](https://github.com/gidragir/ultima-zebar/commit/f5112c942e607380724e5e32ba25e0a70027129b) Thanks [@gidragir](https://github.com/gidragir)! - Polish settings UI with a macOS-style scrollbar and softer top bar
+
+- [`7db87d2`](https://github.com/gidragir/ultima-zebar/commit/7db87d24a74a5e47716ca4658783d98b992fcf3f) Thanks [@gidragir](https://github.com/gidragir)! - Default window effect to none and fix stale or racing window effects
+
+- Updated dependencies [[`ed0fe2e`](https://github.com/gidragir/ultima-zebar/commit/ed0fe2e74cae30a838f8e87a1f950176b75ce199), [`2f4168f`](https://github.com/gidragir/ultima-zebar/commit/2f4168fc028978d5708b12001bbef0792cf684ac), [`0d2d1ac`](https://github.com/gidragir/ultima-zebar/commit/0d2d1ac620649ab42c47c8d0a761df9ca9835024), [`b7a984c`](https://github.com/gidragir/ultima-zebar/commit/b7a984c5b6835c2c4627b1d5754fda65e8af5fe2), [`190ff10`](https://github.com/gidragir/ultima-zebar/commit/190ff10f814c4b8ebed59f96e631d0652c7c9493), [`32b2a63`](https://github.com/gidragir/ultima-zebar/commit/32b2a638d6e8e62ae4dd5b0717d993dfd5022da4), [`30693a6`](https://github.com/gidragir/ultima-zebar/commit/30693a67c31e05c2c7edcdf3900f429b0fe7498f), [`7429781`](https://github.com/gidragir/ultima-zebar/commit/7429781affb4d01533c33e30ccf517e50a3f11b1), [`212f6a1`](https://github.com/gidragir/ultima-zebar/commit/212f6a1eddac1f1a5bf2cd052e58ec61aa99ae7e), [`ea33ef6`](https://github.com/gidragir/ultima-zebar/commit/ea33ef63eebadc02af38e45206ce4b80ac8e89c9), [`1de64c4`](https://github.com/gidragir/ultima-zebar/commit/1de64c49b31fc93f912560548fc4e74c7d594fcd), [`591c1c6`](https://github.com/gidragir/ultima-zebar/commit/591c1c6f4934d8344d3d88d67f7cff6a6daaa924), [`f5112c9`](https://github.com/gidragir/ultima-zebar/commit/f5112c942e607380724e5e32ba25e0a70027129b), [`b7db0cd`](https://github.com/gidragir/ultima-zebar/commit/b7db0cd27c57ffb6543ead676b10f1e35e2a42b3), [`7db87d2`](https://github.com/gidragir/ultima-zebar/commit/7db87d24a74a5e47716ca4658783d98b992fcf3f), [`8f8a0fe`](https://github.com/gidragir/ultima-zebar/commit/8f8a0fe301ce09dcd545690f6f9b285e5ff3d4cc), [`380b8e7`](https://github.com/gidragir/ultima-zebar/commit/380b8e7e9587107a54e367e40c2caf6bc8d7bc24)]:
+  - @ultima-zebar/ui@1.2.0
+  - @ultima-zebar/config@1.2.0
+
 ## 1.1.4
 
 ### Patch Changes
