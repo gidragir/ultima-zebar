@@ -3,7 +3,7 @@
 	"changelog": [
 		"@changesets/changelog-github",
 		{
-			"repo": "mushfikurr/overline-zebar"
+			"repo": "gidragir/ultima-zebar"
 		}
 	],
 	"commit": false,
