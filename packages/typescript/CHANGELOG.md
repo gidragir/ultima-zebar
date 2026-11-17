@@ -1,5 +1,7 @@
 # @ultima-zebar/typescript
 
+## 1.2.0
+
 ## 1.1.4
 
 ### Patch Changes
