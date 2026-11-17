@@ -10,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@ultima-zebar/ui";
+import FontPicker from "../common/FontPicker";
 import { Separator } from "../common/Separator";
 import SettingsPage from "../SettingsPage";
 import { ThemeEditor } from "../theme/ThemeEditor";
@@ -101,6 +102,16 @@ function AppearanceSettings() {
 					<FieldDescription>
 						Sets the window transparency/blurring effect. Restart Zebar to
 						ensure the correct effect is applied.
+					</FieldDescription>
+				</FormField>
+				<Separator />
+				<FormField>
+					<FieldTitle>Font</FieldTitle>
+					<FieldInput>
+						<FontPicker />
+					</FieldInput>
+					<FieldDescription>
+						Font used across all widgets. Defaults to Geist Mono.
 					</FieldDescription>
 				</FormField>
 				<Separator />
