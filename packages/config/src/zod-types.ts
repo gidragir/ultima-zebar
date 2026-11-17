@@ -37,6 +37,7 @@ export const AppSettingsSchema = z.object({
 });
 
 export const ProviderSettingsSchema = z.object({
+	language: z.boolean().default(true),
 	cpu: z.boolean().default(true),
 	memory: z.boolean().default(true),
 	weather: z.boolean().default(true),

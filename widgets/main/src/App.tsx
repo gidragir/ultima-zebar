@@ -17,6 +17,7 @@ import { useAutoTiling } from "./utils/useAutoTiling";
 const providers = zebar.createProviderGroup({
 	media: { type: "media" },
 	glazewm: { type: "glazewm" },
+	keyboard: { type: "keyboard" },
 	cpu: { type: "cpu" },
 	date: { type: "date", formatting: "EEE d MMM t", locale: "en-GB" },
 	memory: { type: "memory" },
@@ -110,6 +111,7 @@ function App() {
 					<StatProviders
 						weather={weather}
 						battery={output.battery}
+						keyboard={output.keyboard}
 						cpu={output.cpu}
 						memory={output.memory}
 					/>

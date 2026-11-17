@@ -18,6 +18,7 @@ import { Separator } from "@/components/common/Separator";
 import ThresholdsInput from "./ThresholdsInput";
 
 const providerLabels: Record<keyof ProviderSettings, string> = {
+	language: "Keyboard Language",
 	cpu: "CPU Usage",
 	memory: "Memory Usage",
 	weather: "Weather",

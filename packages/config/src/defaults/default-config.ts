@@ -52,6 +52,7 @@ export const defaultConfig: RootConfig = {
 			timeFormat: "EEE d MMM t",
 			timeLocale: "en-GB",
 			providers: {
+				language: true,
 				cpu: true,
 				memory: true,
 				weather: true,

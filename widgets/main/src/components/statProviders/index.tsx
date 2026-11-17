@@ -35,11 +35,13 @@ import Stat from "../stat/Stat";
 type Props = {
 	battery: zebar.BatteryOutput | null;
 	memory: zebar.MemoryOutput | null;
+	keyboard: zebar.KeyboardOutput | null;
 	cpu: zebar.CpuOutput | null;
 	weather: zebar.WeatherOutput | null;
 };
 
 export default function StatProviders({
+	keyboard,
 	cpu,
 	memory,
 	battery,
@@ -75,6 +77,12 @@ export default function StatProviders({
 				await zebar.startWidget("system-stats", widgetPlacement, {});
 			}}
 		>
+			{statProviders.language && keyboard && (
+				<p className="font-medium tabular-nums">
+					{formatLayout(keyboard.layout)}
+				</p>
+			)}
+
 			{statProviders.cpu && cpu && (
 				<Stat
 					Icon={<p className="font-medium text-icon">CPU</p>}
@@ -113,6 +121,12 @@ export default function StatProviders({
 			/>
 		</Chip>
 	);
+}
+
+// Layout comes as a locale tag ("en-US", "ru-RU") or a full name; show a short code.
+function formatLayout(layout: string) {
+	const code = layout.split(/[-_ ]/)[0] ?? layout;
+	return code.slice(0, 3).toUpperCase();
 }
 
 type BatteryStatProps = {
