@@ -1,6 +1,6 @@
 import { Input } from "@ultima-zebar/ui";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 interface NumberInputProps
@@ -18,6 +18,26 @@ export function NumberInput({
 }: NumberInputProps) {
 	const [internalValue, setInternalValue] = useState(String(value));
 	const [debouncedValue] = useDebounce(internalValue, debounceMs);
+
+	// Latest values/handler for the unmount flush below, so it commits the
+	// pending edit without a stale closure. Updated in an effect rather than
+	// during render to stay compatible with the React Compiler.
+	const latestRef = useRef({ internalValue, value, onChange });
+	useEffect(() => {
+		latestRef.current = { internalValue, value, onChange };
+	});
+
+	// Flush a pending edit when the input unmounts (e.g. the config widget
+	// is closed right after typing, before the debounce elapses).
+	useEffect(() => {
+		return () => {
+			const { internalValue: latest, value: latestValue } = latestRef.current;
+			const numericValue = parseInt(latest, 10);
+			if (!Number.isNaN(numericValue) && numericValue !== latestValue) {
+				latestRef.current.onChange(numericValue);
+			}
+		};
+	}, []);
 
 	// Effect to sync from parent (external changes)
 	useEffect(() => {
@@ -43,6 +63,11 @@ export function NumberInput({
 		if (Number.isNaN(numericValue)) {
 			// If the user leaves the input in an invalid state, revert it.
 			setInternalValue(String(value));
+			return;
+		}
+		// Commit immediately on blur instead of waiting for the debounce.
+		if (numericValue !== value) {
+			onChange(numericValue);
 		}
 	};
 
