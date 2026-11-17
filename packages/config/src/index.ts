@@ -25,4 +25,5 @@ export type {
 	Threshold,
 	WidgetSettingsMap,
 } from "./types";
+export { generateId } from "./utils/generateId";
 export { generateThemeFromColor } from "./utils/theme-generator";
