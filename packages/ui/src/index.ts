@@ -10,10 +10,13 @@ export { ColorPicker } from "./components/color-picker";
 export * from "./components/context-menu";
 export * from "./components/dialog";
 export {
+	AppFormField,
 	FieldDescription,
 	FieldInput,
+	FieldReset,
 	FieldTitle,
 	FormField,
+	WidgetFormField,
 } from "./components/form-field";
 export { WindowsIcon } from "./components/icons/windows";
 export { Input } from "./components/input";
@@ -37,6 +40,7 @@ export {
 	SelectTrigger,
 	SelectValue,
 } from "./components/select";
+export { Slider } from "./components/slider";
 export { systemStatThresholds } from "./components/stat-ring/defaults/systemStatThresholds";
 export { StatRing } from "./components/stat-ring/StatRing";
 export { LabelType } from "./components/stat-ring/types/labelType";

@@ -1,9 +1,9 @@
 import { useAppSetting } from "@ultima-zebar/config";
 import {
+	AppFormField,
 	FieldDescription,
 	FieldInput,
 	FieldTitle,
-	FormField,
 	Input,
 	Switch,
 } from "@ultima-zebar/ui";
@@ -20,7 +20,7 @@ export function GeneralSettings() {
 			description={"Settings about all ultima-zebar widgets."}
 		>
 			<div>
-				<FormField switch>
+				<AppFormField switch setting="useAutoTiling">
 					<FieldTitle>Enable Auto Tiling</FieldTitle>
 					<FieldInput>
 						<Switch
@@ -32,9 +32,9 @@ export function GeneralSettings() {
 						Will automatically change the tiling direction when the window size
 						becomes less than half.
 					</FieldDescription>
-				</FormField>
+				</AppFormField>
 				<Separator />
-				<FormField>
+				<AppFormField setting="zebarWebsocketUri">
 					<FieldTitle>Zebar WebSocket URI</FieldTitle>
 					<FieldInput>
 						<Input
@@ -47,7 +47,7 @@ export function GeneralSettings() {
 						This is the WebSocket URI for the Zebar service. By default Zebar
 						runs on ws://localhost:6123.
 					</FieldDescription>
-				</FormField>
+				</AppFormField>
 			</div>
 		</SettingsPage>
 	);

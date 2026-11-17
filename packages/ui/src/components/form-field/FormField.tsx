@@ -1,10 +1,13 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Undo2 } from "lucide-react";
 import React, { useId } from "react";
 import { cn } from "../../utils/cn";
+import { Button } from "../button";
 
 interface FormFieldProps extends React.HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
 	switch?: boolean;
+	isDefault?: boolean;
+	onReset?: () => void;
 }
 
 function isFieldTitle(
@@ -30,6 +33,8 @@ export function FormField({
 	className,
 	switch: isSwitch,
 	id: customId,
+	isDefault,
+	onReset,
 	...props
 }: FormFieldProps) {
 	const generatedId = useId();
@@ -49,6 +54,14 @@ export function FormField({
 			})
 		: inputElement;
 
+	const showReset = onReset != null && isDefault === false;
+	const resetButton = showReset && (
+		<FieldReset
+			className="absolute left-full top-1/2 ml-2 -translate-y-[calc(50%+1px)]"
+			onClick={onReset}
+		/>
+	);
+
 	return (
 		<div className={cn(className, !isSwitch && "space-y-3")} {...props}>
 			{isSwitch ? (
@@ -57,17 +70,29 @@ export function FormField({
 				>
 					{input}
 					<div className="space-y-1.5">
-						<label
-							htmlFor={id}
-							className="text-text font-medium leading-none block cursor-pointer"
-						>
-							{React.isValidElement(titleElement)
-								? titleElement.props.children
-								: titleElement}
-						</label>
+						<div className="relative w-fit">
+							<label
+								htmlFor={id}
+								className="text-text font-medium leading-none block cursor-pointer"
+							>
+								{React.isValidElement(titleElement)
+									? titleElement.props.children
+									: titleElement}
+							</label>
+							{resetButton}
+						</div>
 						{descriptionElement}
 					</div>
 				</div>
+			) : showReset && title ? (
+				<>
+					<div className="relative w-fit">
+						{title}
+						{resetButton}
+					</div>
+					{input}
+					{descriptionElement}
+				</>
 			) : (
 				<>
 					{title}
@@ -76,6 +101,28 @@ export function FormField({
 				</>
 			)}
 		</div>
+	);
+}
+
+export function FieldReset({
+	onClick,
+	className,
+}: {
+	onClick: () => void;
+	className?: string;
+}) {
+	return (
+		<Button
+			type="button"
+			variant="ghost"
+			size="icon-sm"
+			className={className}
+			onClick={onClick}
+			aria-label="Reset to default"
+			title="Reset to default"
+		>
+			<Undo2 />
+		</Button>
 	);
 }
 

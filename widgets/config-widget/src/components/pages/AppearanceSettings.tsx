@@ -1,5 +1,6 @@
 import { useAppSetting } from "@ultima-zebar/config";
 import {
+	AppFormField,
 	FieldDescription,
 	FieldInput,
 	FieldTitle,
@@ -40,7 +41,7 @@ function AppearanceSettings() {
 			description="Customise your ultima-zebar widgets to suit you."
 		>
 			<div>
-				<FormField>
+				<AppFormField setting="radius">
 					<FieldTitle>Border Radius</FieldTitle>
 					<FieldInput>
 						<Select
@@ -70,9 +71,9 @@ function AppearanceSettings() {
 					<FieldDescription>
 						Changes how &quot;rounded&quot; elements are.
 					</FieldDescription>
-				</FormField>
+				</AppFormField>
 				<Separator />
-				<FormField>
+				<AppFormField setting="windowEffect">
 					<FieldTitle>Window Effect</FieldTitle>
 					<FieldInput>
 						<Select
@@ -103,9 +104,9 @@ function AppearanceSettings() {
 						Sets the window transparency/blurring effect. Restart Zebar to
 						ensure the correct effect is applied.
 					</FieldDescription>
-				</FormField>
+				</AppFormField>
 				<Separator />
-				<FormField>
+				<AppFormField setting="fontFamily">
 					<FieldTitle>Font</FieldTitle>
 					<FieldInput>
 						<FontPicker />
@@ -113,7 +114,7 @@ function AppearanceSettings() {
 					<FieldDescription>
 						Font used across all widgets. Defaults to Geist Mono.
 					</FieldDescription>
-				</FormField>
+				</AppFormField>
 				<Separator />
 				<FormField>
 					<FieldTitle>Theme</FieldTitle>

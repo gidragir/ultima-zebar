@@ -1,10 +1,10 @@
 import { defaultConfig, useAppSetting, useThemes } from "@ultima-zebar/config";
 import {
+	AppFormField,
 	Button,
 	FieldDescription,
 	FieldInput,
 	FieldTitle,
-	FormField,
 	Switch,
 } from "@ultima-zebar/ui";
 import { PlusIcon } from "lucide-react";
@@ -75,7 +75,7 @@ export function ThemePicker() {
 
 	return (
 		<div className="space-y-6">
-			<FormField switch>
+			<AppFormField switch setting="systemThemeSync">
 				<FieldTitle>Adapt to Windows theme</FieldTitle>
 				<FieldInput>
 					<Switch
@@ -87,7 +87,7 @@ export function ThemePicker() {
 					Switch themes automatically when Windows changes between light and
 					dark mode. When off, the selected theme is always used.
 				</FieldDescription>
-			</FormField>
+			</AppFormField>
 
 			<div className="flex items-center justify-between">
 				<h3 className="text-text-muted text-sm">Themes</h3>
