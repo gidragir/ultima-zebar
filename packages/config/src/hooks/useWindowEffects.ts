@@ -9,6 +9,12 @@ import { createWindowEffectsQueue } from "../utils/windowEffectsQueue";
 // cleanup/remount (including Strict Mode), not just across individual renders.
 const requestWindowEffects = createWindowEffectsQueue();
 
+type ZebarEffect = NonNullable<
+	Parameters<
+		ReturnType<typeof zebar.currentWidget>["tauriWindow"]["setEffects"]
+	>[0]["effects"]
+>[number];
+
 const effectMap: Record<string, Effect[]> = {
 	acrylic: [Effect.Acrylic],
 	blur: [Effect.Blur],
@@ -47,7 +53,13 @@ export function useWindowEffects(state: RootConfig) {
 		return requestWindowEffects(
 			() => tauriWindow.clearEffects(),
 			effects.length > 0
-				? () => tauriWindow.setEffects({ effects, color })
+				? () =>
+						tauriWindow.setEffects({
+							// zebar pins @tauri-apps/api@2.0.2, whose Effect enum is a
+							// subset of ours with identical string values.
+							effects: effects as ZebarEffect[],
+							color,
+						})
 				: undefined,
 		);
 	}, [state.app.windowEffect, state.app.currentThemeId, state.app.themes]);

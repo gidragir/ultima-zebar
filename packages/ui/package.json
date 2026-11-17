@@ -28,14 +28,14 @@
 		"format": "biome format --write src"
 	},
 	"dependencies": {
-		"@base-ui-components/react": "1.0.0-rc.0",
+		"@base-ui/react": "^1.9.0",
 		"@ultima-zebar/config": "workspace:*",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "catalog:",
 		"lucide-react": "catalog:",
 		"motion": "catalog:",
 		"react": "catalog:",
-		"react-colorful": "^5.6.1",
+		"react-colorful": "^5.8.1",
 		"react-dom": "catalog:",
 		"tailwind-merge": "catalog:"
 	},

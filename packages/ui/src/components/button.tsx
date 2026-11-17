@@ -1,7 +1,7 @@
 "use client";
 
-import { mergeProps } from "@base-ui-components/react";
-import { useRender } from "@base-ui-components/react/use-render";
+import { mergeProps } from "@base-ui/react";
+import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../utils/cn";

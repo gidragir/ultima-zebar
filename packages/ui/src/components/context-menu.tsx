@@ -1,4 +1,4 @@
-import { ContextMenu as BaseContextMenu } from "@base-ui-components/react/context-menu";
+import { ContextMenu as BaseContextMenu } from "@base-ui/react/context-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 import type * as React from "react";
 import { cn } from "../utils/cn";

@@ -3,43 +3,60 @@ packages:
   - 'widgets/**'
   - 'packages/**'
 
+# Supply-chain protection
+# Do not resolve versions published less than 7 days ago (in minutes): most
+# compromised releases are detected and unpublished within this window.
+minimumReleaseAge: 10080
+# Fail install if a package's trust level drops (e.g. a release suddenly
+# published without provenance / trusted publishing, as in token-theft attacks).
+trustPolicy: no-downgrade
+# Only direct dependencies may come from git or tarball URLs.
+blockExoticSubdeps: true
+
+# Patched transitive deps (security advisories)
+overrides:
+  # GHSA-68fv-2mgg-jv7q (via postcss / @tailwindcss/node)
+  'source-map-js@<1.2.2': '^1.2.2'
+  # GHSA-96hv-2xvq-fx4p (via zebar -> glazewm)
+  'ws@>=7 <7.5.11': '^7.5.11'
+
 catalog:
   # Core React & Frameworks
 
   # Linting
-  '@biomejs/biome': '^2.4.11'
-  '@radix-ui/react-slider': '^1.3.6'
-  '@tailwindcss/vite': '^4.2.2'
+  '@biomejs/biome': '^2.6.6'
+  '@radix-ui/react-slider': '^1.6.1'
+  '@tailwindcss/vite': '^4.3.5'
 
   # State & Hooks
-  '@tanstack/react-query': '^5.97.0'
-  '@tauri-apps/api': '^2.10.1'
+  '@tanstack/react-query': '^5.107.1'
+  '@tauri-apps/api': '^2.12.4'
   '@tsconfig/recommended': '^1.0.13'
-  '@types/node': '^25.6.0'
-  '@types/react': '^19.2.14'
-  '@types/react-dom': '^19.2.3'
-  '@vitejs/plugin-react': '6.0.1'
+  '@types/node': '^26.6.6'
+  '@types/react': '^19.3.0'
+  '@types/react-dom': '^19.3.0'
+  '@vitejs/plugin-react': '6.3.0'
   'babel-plugin-react-compiler': '^1.0.0'
   'clsx': '^2.1.1'
-  'dotenv': '^17.4.1'
-  'lucide-react': '^1.8.0'
-  'motion': '^12.38.0'
-  react: '^19.2.5'
-  'react-compiler-runtime': '19.1.0-rc.3'
-  react-dom: '^19.2.5'
+  'dotenv': '^18.0.10'
+  'lucide-react': '^1.71.0'
+  'motion': '^14.12.0'
+  react: '^19.3.1'
+  'react-compiler-runtime': '^1.0.0'
+  react-dom: '^19.3.1'
   'react-use-measure': '^2.1.7'
-  'tailwind-merge': '^3.5.0'
+  'tailwind-merge': '^3.7.0'
 
   # Styling & UI
-  tailwindcss: '^4.2.2'
-  'typescript': '^6.0.2'
+  tailwindcss: '^4.3.5'
+  'typescript': '^7.0.2'
   'use-debounce': '^10.1.1'
 
   # Build Utilities
-  vite: '^8.0.8'
+  vite: '^8.3.7'
   'vite-plugin-node': '^8.0.0'
-  'wouter': '^3.9.0'
+  'wouter': '^3.13.0'
 
   # External APIs
   'zebar': '^3.3.1'
-  'zod': '^4.3.6'
+  'zod': '^4.6.7'

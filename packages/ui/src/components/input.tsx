@@ -1,8 +1,9 @@
-import type { Input as BaseInput } from "@base-ui-components/react/input";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 
-interface InputProps extends React.ComponentProps<typeof BaseInput> {
+// Renders a native <input>, so it takes native input props (Base UI's Input
+// props type its ref as HTMLElement, which a native input can't accept).
+interface InputProps extends React.ComponentProps<"input"> {
 	inputContainerClassName?: string;
 	leadingIcon?: React.ReactNode;
 	trailingIcon?: React.ReactNode;
