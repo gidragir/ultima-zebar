@@ -41,4 +41,21 @@ export { systemStatThresholds } from "./components/stat-ring/defaults/systemStat
 export { StatRing } from "./components/stat-ring/StatRing";
 export { LabelType } from "./components/stat-ring/types/labelType";
 export { Switch } from "./components/switch";
+export {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableFooter,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "./components/table/Table";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/tabs";
+export {
+	Tooltip,
+	TooltipPopup,
+	TooltipPortal,
+	TooltipPositioner,
+	TooltipTrigger,
+} from "./components/tooltip/Tooltip";

@@ -50,6 +50,7 @@
 	/* Color System */
 	--color-background: var(--background);
 	--color-background-deeper: var(--background-deeper);
+	--color-surface: var(--surface);
 	--color-border: var(--border);
 	--color-button: var(--button);
 	--color-button-border: var(--button-border);

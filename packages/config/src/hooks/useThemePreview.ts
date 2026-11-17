@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import * as zebar from "zebar";
 import type { Theme } from "../types";
+import { withDerivedThemeColors } from "../utils/theme-colors";
 import { useThemes } from "./useThemes";
 
 export function useThemePreview() {
@@ -11,7 +12,8 @@ export function useThemePreview() {
 
 	const applyPreviewStyles = useCallback((theme: Theme) => {
 		// Apply locally for instant feedback
-		Object.entries(theme.colors).forEach(([key, value]) => {
+		const colors = withDerivedThemeColors(theme.colors);
+		Object.entries(colors).forEach(([key, value]) => {
 			if (value !== undefined) {
 				document.documentElement.style.setProperty(key, value);
 			}
@@ -23,7 +25,8 @@ export function useThemePreview() {
 	const revertStyles = useCallback(() => {
 		if (activeTheme) {
 			// Re-apply active theme styles locally
-			Object.entries(activeTheme.colors).forEach(([key, value]) => {
+			const colors = withDerivedThemeColors(activeTheme.colors);
+			Object.entries(colors).forEach(([key, value]) => {
 				document.documentElement.style.setProperty(key, value);
 			});
 		}

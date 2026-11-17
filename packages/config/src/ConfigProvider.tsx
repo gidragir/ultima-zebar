@@ -11,6 +11,7 @@ import { useWindowEffects } from "./hooks/useWindowEffects";
 import { useConfigChangeIpc } from "./ipc/hooks/useConfigChangeIpc";
 import { useThemePreviewIpc } from "./ipc/hooks/useThemePreviewIpc";
 import { deepMerge } from "./utils/deepMerge";
+import { withDerivedThemeColors } from "./utils/theme-colors";
 import { RootConfigSchema } from "./zod-types";
 
 const getInitialState = () => {
@@ -52,7 +53,8 @@ export const ConfigProvider: React.FC<{
 			(t) => t.id === state.app.currentThemeId,
 		);
 		if (theme) {
-			Object.entries(theme.colors).forEach(([key, value]) => {
+			const colors = withDerivedThemeColors(theme.colors);
+			Object.entries(colors).forEach(([key, value]) => {
 				document.documentElement.style.setProperty(key, value);
 			});
 		}
