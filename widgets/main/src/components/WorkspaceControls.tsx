@@ -1,6 +1,6 @@
 import { useWidgetSetting } from "@ultima-zebar/config";
-import { chipStyles } from "@ultima-zebar/ui";
-import { AnimatePresence, motion } from "framer-motion";
+import { chipStyles, fadeSwap, springLayout } from "@ultima-zebar/ui";
+import { AnimatePresence, motion } from "motion/react";
 import type { GlazeWmOutput } from "zebar";
 import { cn } from "../utils/cn";
 import { ContainerType, formatWindowTitle } from "./windowTitle/WindowTitle";
@@ -10,16 +10,15 @@ type WorkspaceControlsProps = {
 };
 
 export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
-	if (!glazewm) return null;
-
-	const workspaces = glazewm.currentWorkspaces;
-	const focusedWorkspace = glazewm.focusedWorkspace;
 	const [dynamicWorkspaceIndicator] = useWidgetSetting(
 		"main",
 		"dynamicWorkspaceIndicator",
 	);
 
-	const springConfig = { type: "spring", stiffness: 300, damping: 30 };
+	if (!glazewm) return null;
+
+	const workspaces = glazewm.currentWorkspaces;
+	const focusedWorkspace = glazewm.focusedWorkspace;
 
 	const getDynamicWorkspaceName = (id: string) => {
 		if (!dynamicWorkspaceIndicator) return undefined;
@@ -55,10 +54,8 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 		<AnimatePresence>
 			<motion.div
 				onWheel={handleWheel}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={springConfig}
+				{...fadeSwap}
+				transition={springLayout}
 				layout="size"
 				className={cn(
 					chipStyles,
@@ -75,7 +72,7 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 					return (
 						<motion.button
 							key={workspace.name}
-							transition={springConfig}
+							transition={springLayout}
 							onClick={() =>
 								glazewm.runCommand(`focus --workspace ${workspace.name}`)
 							}
@@ -85,15 +82,13 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 							{isActive && (
 								<motion.span
 									layoutId="activeWorkspace"
-									transition={springConfig}
+									transition={springLayout}
 									className="absolute w-full h-full inset-0 bg-primary border border-primary-border drop-shadow-sm z-0"
 									style={{ borderRadius: "calc(var(--radius-2xl) - 0.25rem)" }}
 								/>
 							)}
 							<motion.span
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
+								{...fadeSwap}
 								transition={{ duration: 0.2 }}
 								className={cn(
 									"relative z-10 px-0.5 w-full h-full leading-none text-center flex items-center justify-center",

@@ -1,5 +1,5 @@
 import * as RadixSlider from "@radix-ui/react-slider";
-import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent } from "motion/react";
 import { type ElementRef, useRef, useState } from "react";
 
 const MAX_OVERFLOW = 50;
@@ -12,7 +12,7 @@ export default function Slider({
 	setValue: (value: number) => void;
 }) {
 	const ref = useRef<ElementRef<typeof RadixSlider.Root>>(null);
-	const [_region, setRegion] = useState("middle");
+	const [, setRegion] = useState("middle");
 	const clientX = useMotionValue(0);
 	const overflow = useMotionValue(0);
 

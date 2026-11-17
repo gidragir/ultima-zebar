@@ -11,7 +11,7 @@ import { TitleDetails } from "./components/TitleDetails";
 export const TitleDetailsMemo = React.memo(TitleDetails);
 
 type MediaProps = {
-	media: MediaOutput | null;
+	media: MediaOutput;
 };
 
 const NO_SESSIONS: MediaSession[] = [];

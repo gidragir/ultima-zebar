@@ -1,7 +1,7 @@
 import { useWidgetSetting } from "@ultima-zebar/config";
-import { Button } from "@ultima-zebar/ui";
-import { AnimatePresence, motion } from "framer-motion";
+import { Button, fadeSwap } from "@ultima-zebar/ui";
 import { ChevronRight, LayoutGrid } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
 import type { GlazeWmOutput } from "zebar";
 import * as zebar from "zebar";
@@ -40,10 +40,7 @@ export function LeftButtons({ glazewm }: LeftButtonsProps) {
 				{glazewm.isPaused && (
 					<motion.div
 						key="paused"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.15, ease: "easeInOut" }}
-						exit={{ opacity: 0 }}
+						{...fadeSwap}
 						className="flex items-center h-full"
 					>
 						<Button
@@ -58,10 +55,7 @@ export function LeftButtons({ glazewm }: LeftButtonsProps) {
 				{glazewm.bindingModes.map((bindingMode) => (
 					<motion.div
 						key={bindingMode.name}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.15, ease: "easeInOut" }}
-						exit={{ opacity: 0 }}
+						{...fadeSwap}
 						className="flex items-center h-full"
 					>
 						<Button size="sm">

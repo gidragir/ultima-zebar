@@ -1,5 +1,6 @@
-import { AnimatePresence, type HTMLMotionProps, motion } from "framer-motion";
+import { iconFeedback, iconSwap } from "@ultima-zebar/ui";
 import { Check, Clipboard, type LucideIcon } from "lucide-react";
+import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
 import type React from "react";
 import { useState } from "react";
 import { cn } from "@/utils/cn";
@@ -51,8 +52,6 @@ interface IconButtonProps
 	animateProps?: HTMLMotionProps<"div">;
 }
 
-// TODO: Shares same animation as Status. Maybe extract to a component?
-
 const IconButton = ({
 	icon: Icon,
 	animateKey,
@@ -76,12 +75,8 @@ const IconButton = ({
 				<AnimatePresence mode="popLayout">
 					<motion.div
 						key={animateKey}
-						initial={{ opacity: 0, scale: 0.5 }}
-						animate={{ opacity: 1, scale: 1.1 }} // 1.1 to mitigate the blurry icon
-						exit={{ opacity: 0, scale: 0.5 }}
-						whileHover={{ scale: 1.2 }}
-						whileTap={{ scale: 0.9 }}
-						transition={{ duration: 0.2 }}
+						{...iconSwap}
+						{...iconFeedback}
 						{...animateProps}
 					>
 						{renderInner(Icon)}

@@ -59,3 +59,12 @@ export {
 	TooltipPositioner,
 	TooltipTrigger,
 } from "./components/tooltip/Tooltip";
+export {
+	fadeSwap,
+	iconFeedback,
+	iconSwap,
+	type SwapAnimation,
+	springLayout,
+	springPanel,
+	textSwap,
+} from "./motion";

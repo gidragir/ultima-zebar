@@ -45,9 +45,6 @@ catalogs:
     dotenv:
       specifier: ^17.4.1
       version: 17.4.1
-    framer-motion:
-      specifier: ^12.38.0
-      version: 12.38.0
     lucide-react:
       specifier: ^1.8.0
       version: 1.8.0
@@ -247,12 +244,12 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 17.4.1
-      framer-motion:
-        specifier: 'catalog:'
-        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       lucide-react:
         specifier: 'catalog:'
         version: 1.8.0(react@19.2.5)
+      motion:
+        specifier: 'catalog:'
+        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react:
         specifier: 'catalog:'
         version: 19.2.5
@@ -329,12 +326,12 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 17.4.1
-      framer-motion:
-        specifier: 'catalog:'
-        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       lucide-react:
         specifier: 'catalog:'
         version: 1.8.0(react@19.2.5)
+      motion:
+        specifier: 'catalog:'
+        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react:
         specifier: 'catalog:'
         version: 19.2.5
@@ -457,12 +454,12 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 17.4.1
-      framer-motion:
-        specifier: 'catalog:'
-        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       lucide-react:
         specifier: 'catalog:'
         version: 1.8.0(react@19.2.5)
+      motion:
+        specifier: 'catalog:'
+        version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react:
         specifier: 'catalog:'
         version: 19.2.5

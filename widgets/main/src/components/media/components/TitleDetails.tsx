@@ -1,5 +1,5 @@
 import { useWidgetSetting } from "@ultima-zebar/config";
-import { AnimatePresence, type MotionProps, motion } from "framer-motion";
+import { AnimatePresence, type MotionProps, motion } from "motion/react";
 import React from "react";
 import { cn } from "../../../utils/cn";
 
@@ -48,6 +48,12 @@ const defaultExpansionTransition: MotionProps["transition"] = {
 	ease: [0.4, 0, 0.2, 1],
 };
 
+const textFade = {
+	initial: { opacity: 0 },
+	animate: { opacity: 1 },
+	exit: { opacity: 0 },
+} satisfies Pick<MotionProps, "initial" | "animate" | "exit">;
+
 const MotionText = React.forwardRef<
 	HTMLParagraphElement,
 	{
@@ -55,23 +61,19 @@ const MotionText = React.forwardRef<
 		className?: string;
 		transition?: MotionProps["transition"];
 	} & MotionProps
->(
-	(
-		{ children, className, transition = defaultExpansionTransition, ...props },
-		ref,
-	) => {
-		return (
-			<motion.p
-				ref={ref}
-				className={cn("whitespace-nowrap overflow-hidden", className)}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={{ ...transition, opacity: { duration: 0.3 } }}
-				{...props}
-			>
-				{children}
-			</motion.p>
-		);
-	},
-);
+>(function MotionText(
+	{ children, className, transition = defaultExpansionTransition, ...props },
+	ref,
+) {
+	return (
+		<motion.p
+			ref={ref}
+			className={cn("whitespace-nowrap overflow-hidden", className)}
+			{...textFade}
+			transition={{ ...transition, opacity: { duration: 0.3 } }}
+			{...props}
+		>
+			{children}
+		</motion.p>
+	);
+});

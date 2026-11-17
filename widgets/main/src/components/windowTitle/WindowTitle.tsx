@@ -1,5 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { textSwap } from "@ultima-zebar/ui";
 import { AppWindowIcon } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { forwardRef, useEffect, useState } from "react";
 import type { GlazeWmOutput } from "zebar";
 import { WindowControls } from "./components/WindowControls";
@@ -29,6 +30,7 @@ function hasResolvedFocus(glazewm: GlazeWmOutput | null): boolean {
 export const WindowTitle = forwardRef<HTMLButtonElement, WindowTitleProps>(
 	({ glazewm }, ref) => {
 		const [show, setShow] = useState(false);
+		if (!glazewm) return;
 
 		// Entering a workspace without keep_alive briefly reports no focused
 		// workspace/container. Hold the last resolved title through that state
@@ -43,7 +45,6 @@ export const WindowTitle = forwardRef<HTMLButtonElement, WindowTitleProps>(
 		if (!glazewm) return null;
 
 		const title = liveTitle !== undefined ? liveTitle : heldTitle;
-		const ANIMATION_EXIT_OFFSET = 3;
 
 		function handleWindowTitle(e: React.MouseEvent, textToCopy: string) {
 			if (e.altKey) {
@@ -66,10 +67,7 @@ export const WindowTitle = forwardRef<HTMLButtonElement, WindowTitleProps>(
 				<motion.button
 					ref={ref}
 					key={title ?? "default-icon"}
-					initial={{ opacity: 0, y: -ANIMATION_EXIT_OFFSET }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: ANIMATION_EXIT_OFFSET }}
-					transition={{ duration: 0.15, ease: "easeInOut" }}
+					{...textSwap}
 					className="font-medium relative h-full flex items-center cu"
 					title={title ?? "Focused Window"}
 					onClick={(e: React.MouseEvent) =>

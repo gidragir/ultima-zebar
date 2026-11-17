@@ -1,5 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { iconSwap } from "@ultima-zebar/ui";
 import { ArrowDownUp, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { usePlayPause } from "../../../utils/usePlayPause";
 
 export enum PlayPauseState {
@@ -22,13 +23,7 @@ export function Status({ isPlaying }: { isPlaying: boolean }) {
 
 	return (
 		<AnimatePresence mode="popLayout">
-			<motion.div
-				key={key}
-				initial={{ opacity: 0, scale: 0.5 }}
-				animate={{ opacity: 1, scale: 1.1 }} // 1.1 to mitigate the blurry icon
-				exit={{ opacity: 0, scale: 0.5 }}
-				transition={{ duration: 0.2 }}
-			>
+			<motion.div key={key} {...iconSwap}>
 				<PlayPauseIcon LucideIcon={icon} />
 			</motion.div>
 		</AnimatePresence>
