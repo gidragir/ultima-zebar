@@ -9,7 +9,7 @@ const getWindowProcess = (glazewm: GlazeWmOutput | null): string | null => {
 	if (!glazewm) return null;
 	const focusedContainer = glazewm.focusedContainer;
 
-	if (focusedContainer.type === ContainerType.WINDOW) {
+	if (focusedContainer?.type === ContainerType.WINDOW) {
 		return focusedContainer.processName;
 	}
 

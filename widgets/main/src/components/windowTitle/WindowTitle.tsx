@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AppWindowIcon } from "lucide-react";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import type { GlazeWmOutput } from "zebar";
 import { WindowControls } from "./components/WindowControls";
 
@@ -8,12 +8,41 @@ type WindowTitleProps = {
 	glazewm: GlazeWmOutput | null;
 };
 
+// Focus is resolved once the focused container exists, belongs to the focused
+// workspace and (for windows) already has a title. Intermediate GlazeWM states
+// while switching workspaces fail one of these checks.
+function hasResolvedFocus(glazewm: GlazeWmOutput | null): boolean {
+	const workspace = glazewm?.focusedWorkspace;
+	const focused = glazewm?.focusedContainer;
+	if (!workspace || !focused) return false;
+	if (focused.type === ContainerType.WINDOW && !focused.title) return false;
+
+	const containsFocus = (
+		container: GlazeWmOutput["focusedContainer"],
+	): boolean =>
+		container.id === focused.id ||
+		("children" in container && container.children.some(containsFocus));
+
+	return containsFocus(workspace);
+}
+
 export const WindowTitle = forwardRef<HTMLButtonElement, WindowTitleProps>(
 	({ glazewm }, ref) => {
-		if (!glazewm) return;
 		const [show, setShow] = useState(false);
 
-		const title = getWindowTitle(glazewm);
+		// Entering a workspace without keep_alive briefly reports no focused
+		// workspace/container. Hold the last resolved title through that state
+		// instead of rendering (and animating to) an intermediate one.
+		const resolved = hasResolvedFocus(glazewm);
+		const liveTitle = glazewm && resolved ? getWindowTitle(glazewm) : undefined;
+		const [heldTitle, setHeldTitle] = useState<string | null>(null);
+		useEffect(() => {
+			if (liveTitle !== undefined) setHeldTitle(liveTitle);
+		}, [liveTitle]);
+
+		if (!glazewm) return null;
+
+		const title = liveTitle !== undefined ? liveTitle : heldTitle;
 		const ANIMATION_EXIT_OFFSET = 3;
 
 		function handleWindowTitle(e: React.MouseEvent, textToCopy: string) {
@@ -91,6 +120,9 @@ const getWindowTitle = (glazewm: GlazeWmOutput): string | null => {
 	const focusedWorkspace = glazewm.focusedWorkspace;
 	const focusedContainer = glazewm.focusedContainer;
 
+	// Unresolved focus state (see WindowTitle) — reading through it throws.
+	if (!focusedWorkspace || !focusedContainer) return null;
+
 	if (focusedContainer.type === ContainerType.WINDOW) {
 		return formatWindowTitle(
 			focusedContainer.title,
@@ -108,7 +140,7 @@ const getWindowTitle = (glazewm: GlazeWmOutput): string | null => {
 const getWindowProcess = (glazewm: GlazeWmOutput): string | null => {
 	const focusedContainer = glazewm.focusedContainer;
 
-	if (focusedContainer.type === ContainerType.WINDOW) {
+	if (focusedContainer?.type === ContainerType.WINDOW) {
 		return focusedContainer.processName;
 	}
 
