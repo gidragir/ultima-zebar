@@ -6,6 +6,7 @@ import {
 	FormField,
 	Switch,
 } from "@ultima-zebar/ui";
+import { CoordinateInput } from "@/components/CoordinateInput";
 import { Separator } from "@/components/common/Separator";
 import ThresholdsInput from "./ThresholdsInput";
 
@@ -19,6 +20,14 @@ const providerLabels: Record<keyof ProviderSettings, string> = {
 export default function SystemStatsTab() {
 	const [providers, setProviders] = useWidgetSetting("main", "providers");
 	const [weatherUnit, setWeatherUnit] = useWidgetSetting("main", "weatherUnit");
+	const [weatherLatitude, setWeatherLatitude] = useWidgetSetting(
+		"main",
+		"weatherLatitude",
+	);
+	const [weatherLongitude, setWeatherLongitude] = useWidgetSetting(
+		"main",
+		"weatherLongitude",
+	);
 	const [useInlineStats, setUseInlineStats] = useWidgetSetting(
 		"main",
 		"useInlineStats",
@@ -49,7 +58,7 @@ export default function SystemStatsTab() {
 						Enable or disable individual system stat providers.
 					</p>
 				</div>
-				<div className="space-y-3">
+				<div className="space-y-6">
 					{(Object.keys(providers) as Array<keyof ProviderSettings>).map(
 						(key) => (
 							<FormField switch key={key}>
@@ -72,7 +81,7 @@ export default function SystemStatsTab() {
 			{(providers.cpu || providers.memory) && (
 				<>
 					<Separator />
-					<div className="space-y-4">
+					<div className="space-y-6">
 						<div className="space-y-0.5 mb-4">
 							<h1 className="text-text">CPU & RAM Display</h1>
 							<p className="text-text-muted">
@@ -113,7 +122,7 @@ export default function SystemStatsTab() {
 
 			{/* Weather Specific Settings */}
 			{providers.weather && (
-				<div className="space-y-4">
+				<div className="space-y-6">
 					<h1 className="text-text-muted font-medium">Weather Settings</h1>
 					<FormField switch>
 						<FieldTitle>Toggle Fahrenheit</FieldTitle>
@@ -127,6 +136,30 @@ export default function SystemStatsTab() {
 						</FieldInput>
 						<FieldDescription>
 							Toggle to display weather temperatures in Fahrenheit or Celsius.
+						</FieldDescription>
+					</FormField>
+					<FormField>
+						<FieldTitle>Location Override</FieldTitle>
+						<FieldInput>
+							<div className="grid grid-cols-2 gap-3">
+								<CoordinateInput
+									placeholder="Latitude"
+									value={weatherLatitude}
+									onChange={setWeatherLatitude}
+									min={-90}
+									max={90}
+								/>
+								<CoordinateInput
+									placeholder="Longitude"
+									value={weatherLongitude}
+									onChange={setWeatherLongitude}
+									min={-180}
+									max={180}
+								/>
+							</div>
+						</FieldInput>
+						<FieldDescription>
+							Leave empty to estimate location from your IP address.
 						</FieldDescription>
 					</FormField>
 					<div className="space-y-4">
