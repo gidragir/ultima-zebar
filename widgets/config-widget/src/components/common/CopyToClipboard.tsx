@@ -1,8 +1,8 @@
-import { iconFeedback, iconSwap } from "@ultima-zebar/ui";
+import { iconFeedback, quickSwap } from "@ultima-zebar/ui";
 import { Check, Clipboard, type LucideIcon } from "lucide-react";
 import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
 import type React from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/utils/cn";
 
 interface CopyToClipboardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,6 +16,7 @@ export function CopyToClipboard({
 	...props
 }: CopyToClipboardProps) {
 	const [copying, setCopying] = useState(false);
+	const copyTimeout = useRef<number | undefined>(undefined);
 
 	if (!textToCopy) return;
 
@@ -25,7 +26,8 @@ export function CopyToClipboard({
 			.then(() => {
 				console.log(`Copied to clipboard: ${textToCopy}`);
 				setCopying(true);
-				setTimeout(() => setCopying(false), 750);
+				clearTimeout(copyTimeout.current);
+				copyTimeout.current = window.setTimeout(() => setCopying(false), 300);
 			})
 			.catch((err) => {
 				console.error("Failed to copy text to clipboard:", err);
@@ -75,7 +77,7 @@ const IconButton = ({
 				<AnimatePresence mode="popLayout">
 					<motion.div
 						key={animateKey}
-						{...iconSwap}
+						{...quickSwap}
 						{...iconFeedback}
 						{...animateProps}
 					>

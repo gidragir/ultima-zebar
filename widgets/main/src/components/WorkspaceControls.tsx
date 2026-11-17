@@ -17,6 +17,8 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 
 	if (!glazewm) return null;
 
+	const isPaused = glazewm.isPaused;
+
 	const workspaces = glazewm.currentWorkspaces;
 	const focusedWorkspace = glazewm.focusedWorkspace;
 
@@ -38,6 +40,8 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 	};
 
 	const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+		if (isPaused) return;
+
 		const delta = e.deltaY > 0 ? 1 : -1;
 		const index = workspaces.indexOf(focusedWorkspace);
 		const next = workspaces[index + delta];
@@ -55,11 +59,14 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 			<motion.div
 				onWheel={handleWheel}
 				{...fadeSwap}
+				animate={{ opacity: isPaused ? 0.5 : 1 }}
 				transition={springLayout}
 				layout="size"
 				className={cn(
 					chipStyles,
 					"flex items-center gap-1 p-1 h-full rounded-2xl select-none overflow-hidden",
+					isPaused &&
+						"saturate-50 hover:border-border cursor-not-allowed transition-[filter]",
 				)}
 			>
 				{workspaces.map((workspace) => {
@@ -73,10 +80,15 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 						<motion.button
 							key={workspace.name}
 							transition={springLayout}
-							onClick={() =>
-								glazewm.runCommand(`focus --workspace ${workspace.name}`)
-							}
-							className="relative touch-hitbox flex items-center justify-center px-1 min-w-0 max-w-[10rem] h-full"
+							aria-disabled={isPaused}
+							onClick={() => {
+								if (isPaused) return;
+								glazewm.runCommand(`focus --workspace ${workspace.name}`);
+							}}
+							className={cn(
+								"relative touch-hitbox flex items-center justify-center px-1 min-w-0 max-w-[10rem] h-full",
+								isPaused && "cursor-not-allowed",
+							)}
 							style={{ WebkitTapHighlightColor: "transparent" }}
 						>
 							{isActive && (
@@ -95,7 +107,7 @@ export function WorkspaceControls({ glazewm }: WorkspaceControlsProps) {
 									"transition-colors ease-in-out duration-200",
 									isActive
 										? "text-primary-text font-medium"
-										: "text-text-muted hover:text-text transition-colors",
+										: cn("text-text-muted", !isPaused && "hover:text-text"),
 								)}
 							>
 								<span className="truncate block min-w-0">{label}</span>

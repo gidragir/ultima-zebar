@@ -63,6 +63,7 @@ export {
 	fadeSwap,
 	iconFeedback,
 	iconSwap,
+	quickSwap,
 	type SwapAnimation,
 	springLayout,
 	springPanel,
