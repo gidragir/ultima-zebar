@@ -59,27 +59,50 @@ function saveConfig(config: RootConfig) {
 	zebar.currentWidget().tauriWindow.emit("config-changed");
 }
 
+// Reloads the config from storage before applying the change, so edits made
+// by another widget since our last load are not overwritten with stale
+// in-memory state. Returns the saved config for use as the new React state.
+function updateConfig(updater: (config: RootConfig) => RootConfig): RootConfig {
+	const next = updater(loadConfig(true));
+	saveConfig(next);
+	return next;
+}
+
 function updateAppSetting<K extends keyof RootConfig["app"]>(
 	key: K,
 	value: RootConfig["app"][K],
-) {
-	const config = loadConfig();
-	config.app[key] = value;
-	saveConfig(config);
+): RootConfig {
+	return updateConfig((config) => ({
+		...config,
+		app: { ...config.app, [key]: value },
+	}));
+}
+
+function updateWidgetSettings(
+	widgetName: keyof AllWidgetSettings,
+	settings: Record<string, unknown>,
+): RootConfig {
+	return updateConfig((config) => {
+		const widgets = config.widgets as Record<string, unknown>;
+		return {
+			...config,
+			widgets: {
+				...widgets,
+				[widgetName]: {
+					...((widgets[widgetName] as Record<string, unknown>) || {}),
+					...settings,
+				},
+			} as RootConfig["widgets"],
+		};
+	});
 }
 
 function updateWidgetSetting(
 	widgetName: keyof AllWidgetSettings,
 	key: string,
 	value: unknown,
-) {
-	const config = loadConfig();
-	const widgets = config.widgets as Record<string, unknown>;
-	if (!widgets[widgetName]) {
-		widgets[widgetName] = {};
-	}
-	(widgets[widgetName] as Record<string, unknown>)[key] = value;
-	saveConfig(config);
+): RootConfig {
+	return updateWidgetSettings(widgetName, { [key]: value });
 }
 
 function getAppSetting<K extends keyof RootConfig["app"]>(
@@ -96,8 +119,10 @@ function getWidgetSetting(widgetName: string, key: string): unknown {
 export const configService = {
 	loadConfig,
 	saveConfig,
+	updateConfig,
 	updateAppSetting,
 	updateWidgetSetting,
+	updateWidgetSettings,
 	getAppSetting,
 	getWidgetSetting,
 };

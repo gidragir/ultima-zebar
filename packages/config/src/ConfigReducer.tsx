@@ -36,63 +36,45 @@ export function configReducer(state: State, action: Action): State {
 	switch (action.type) {
 		case "LOAD_CONFIG":
 			return action.config;
-		case "SET_APP_SETTING": {
-			const newState = {
-				...state,
-				app: { ...state.app, [action.key]: action.value },
-			};
-			configService.saveConfig(newState);
-			return newState;
-		}
-		case "ADD_THEME": {
-			const newThemes = [...state.app.themes, action.theme];
-			const newState = {
-				...state,
-				app: { ...state.app, themes: newThemes },
-			};
-			configService.saveConfig(newState);
-			return newState;
-		}
-		case "UPDATE_THEME": {
-			const newThemes = state.app.themes.map((t) =>
-				t.id === action.theme.id ? action.theme : t,
+		// Persisting actions apply the change to a fresh copy of the stored
+		// config (not to `state`), so concurrent edits from other widgets
+		// are not lost.
+		case "SET_APP_SETTING":
+			return configService.updateAppSetting(action.key, action.value);
+		case "ADD_THEME":
+			return configService.updateConfig((config) => ({
+				...config,
+				app: { ...config.app, themes: [...config.app.themes, action.theme] },
+			}));
+		case "UPDATE_THEME":
+			return configService.updateConfig((config) => ({
+				...config,
+				app: {
+					...config.app,
+					themes: config.app.themes.map((t) =>
+						t.id === action.theme.id ? action.theme : t,
+					),
+				},
+			}));
+		case "DELETE_THEME":
+			return configService.updateConfig((config) => ({
+				...config,
+				app: {
+					...config.app,
+					themes: config.app.themes.filter((t) => t.id !== action.themeId),
+				},
+			}));
+		case "UPDATE_WIDGET_SETTINGS":
+			return configService.updateWidgetSettings(
+				action.widget as keyof AllWidgetSettings,
+				action.settings,
 			);
-			const newState = {
-				...state,
-				app: { ...state.app, themes: newThemes },
-			};
-			configService.saveConfig(newState);
-			return newState;
-		}
-		case "DELETE_THEME": {
-			const newThemes = state.app.themes.filter((t) => t.id !== action.themeId);
-			const newState = {
-				...state,
-				app: { ...state.app, themes: newThemes },
-			};
-			configService.saveConfig(newState);
-			return newState;
-		}
-		case "UPDATE_WIDGET_SETTINGS": {
-			const newWidgets = { ...state.widgets } as Record<string, unknown>;
-			newWidgets[action.widget] = {
-				...((newWidgets[action.widget] as Record<string, unknown>) || {}),
-				...action.settings,
-			};
-			const newState = { ...state, widgets: newWidgets };
-			configService.saveConfig(newState);
-			return newState;
-		}
-		case "SET_WIDGET_SETTING": {
-			const newWidgets = { ...state.widgets } as Record<string, unknown>;
-			newWidgets[action.widget] = {
-				...((newWidgets[action.widget] as Record<string, unknown>) || {}),
-				[action.key]: action.value,
-			};
-			const newState = { ...state, widgets: newWidgets };
-			configService.saveConfig(newState);
-			return newState;
-		}
+		case "SET_WIDGET_SETTING":
+			return configService.updateWidgetSetting(
+				action.widget as keyof AllWidgetSettings,
+				action.key,
+				action.value,
+			);
 		case "SET_WIDGET_VISIBILITY": {
 			const newWidgets = { ...state.widgets } as Record<string, unknown>;
 			newWidgets[action.widget] = {
