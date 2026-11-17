@@ -28,3 +28,8 @@ public/geistMono
 *.njsproj
 *.sln
 *.sw?
+
+*.tsbuildinfo
+
+# Windows reserved device names
+nul
