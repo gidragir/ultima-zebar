@@ -14,11 +14,8 @@ import TimeTab from "./components/TimeTab";
 export function MainSettings() {
 	return (
 		<PanelLayout>
-			<Tabs defaultValue="general" className="flex-grow gap-0">
-				<PanelHeading
-					title="Main (Topbar)"
-					description="Customise your main topbar widget."
-				>
+			<Tabs defaultValue="general" className="h-full min-h-0 gap-0">
+				<PanelHeading title="Top Bar" description="Customise your top bar.">
 					<TabsList className="mt-4">
 						<TabsTrigger value="general">General</TabsTrigger>
 						<TabsTrigger value="time">Time</TabsTrigger>
@@ -38,7 +35,10 @@ export function MainSettings() {
 				>
 					<SystemStatsTab />
 				</TabsContent>
-				<TabsContent value="systray" className="space-y-3 flex-none px-4 py-4">
+				<TabsContent
+					value="systray"
+					className="flex min-h-0 flex-1 flex-col px-4 py-4"
+				>
 					<SystrayTab />
 				</TabsContent>
 			</Tabs>
