@@ -45,20 +45,19 @@ jobs:
 
             - name: Create Release Pull Request or Tag
               id: changesets
-              uses: changesets/action@v1
+              uses: changesets/action@v2
               with:
-                  version: pnpm run version-packages
-                  commit: 'chore(release): version packages'
-                  title: 'chore(release): version packages'
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  # github-token defaults to the workflow's GITHUB_TOKEN
+                  version-script: pnpm run version-packages
+                  commit-message: 'chore(release): version packages'
+                  pr-title: 'chore(release): version packages'
 
             # The release version comes from a changesets-managed package (all
             # @ultima-zebar/* packages share one version); the root package.json
             # is not bumped by changesets. Skip the release when it already
             # exists so pushes without changesets never overwrite its assets.
             - name: Get version
-              if: steps.changesets.outputs.hasChangesets == 'false'
+              if: steps.changesets.outputs.has-changesets == 'false'
               id: get_version
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,11 +72,11 @@ jobs:
                   fi
 
             - name: Build project
-              if: steps.changesets.outputs.hasChangesets == 'false' && steps.get_version.outputs.exists == 'false'
+              if: steps.changesets.outputs.has-changesets == 'false' && steps.get_version.outputs.exists == 'false'
               run: pnpm run build -- --cache-dir=".turbo"
 
             - name: Create release folder structure
-              if: steps.changesets.outputs.hasChangesets == 'false' && steps.get_version.outputs.exists == 'false'
+              if: steps.changesets.outputs.has-changesets == 'false' && steps.get_version.outputs.exists == 'false'
               run: |
                   # Update version in zpack.json to the release version
                   VERSION=$(node -p "require('./widgets/main/package.json').version")
@@ -97,14 +96,14 @@ jobs:
                   done
 
             - name: Zip release folder
-              if: steps.changesets.outputs.hasChangesets == 'false' && steps.get_version.outputs.exists == 'false'
+              if: steps.changesets.outputs.has-changesets == 'false' && steps.get_version.outputs.exists == 'false'
               run: |
                   cd release_build
                   zip -r ../ultima-zebar.zip *
                   cd ..
 
             - name: Create GitHub Release
-              if: steps.changesets.outputs.hasChangesets == 'false' && steps.get_version.outputs.exists == 'false'
+              if: steps.changesets.outputs.has-changesets == 'false' && steps.get_version.outputs.exists == 'false'
               uses: softprops/action-gh-release@v3
               with:
                   tag_name: ${{ steps.get_version.outputs.version }}
