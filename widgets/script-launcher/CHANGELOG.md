@@ -1,5 +1,15 @@
 # @ultima-zebar/script-launcher
 
+## 1.2.1
+
+### Patch Changes
+
+- [`0b92a2b`](https://github.com/gidragir/ultima-zebar/commit/0b92a2b16841703385d836e429c14ba34688ac86) Thanks [@gidragir](https://github.com/gidragir)! - Update dependencies (React 19.3, Vite 8.3, TypeScript 7, motion 14, Tailwind CSS 4.3, base-ui 1.9) and patch vulnerable transitive packages
+- Updated dependencies [[`0b92a2b`](https://github.com/gidragir/ultima-zebar/commit/0b92a2b16841703385d836e429c14ba34688ac86)]:
+  - @ultima-zebar/config@1.2.1
+  - @ultima-zebar/ui@1.2.1
+  - @ultima-zebar/config-widget@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes
