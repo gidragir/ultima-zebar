@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
@@ -40,8 +40,12 @@ export default defineConfig({
 					console.log(err.message);
 				}
 
-				// Start the new zebar.exe process
-				execSync(`start ${exePath}`, { stdio: "inherit" });
+				// Start the new zebar.exe process detached, so the build never
+				// waits on it (execSync('start ...') hangs on inherited handles).
+				spawn("cmd", ["/c", "start", "", exePath], {
+					detached: true,
+					stdio: "ignore",
+				}).unref();
 			},
 		},
 	],
