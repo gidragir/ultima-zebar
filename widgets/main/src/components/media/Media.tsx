@@ -1,7 +1,8 @@
 import { Chip } from "@ultima-zebar/ui";
 import React from "react";
-import type { MediaOutput } from "zebar";
+import type { MediaOutput, MediaSession } from "zebar";
 import { cn } from "../../utils/cn";
+import { useMostRecentMediaSession } from "../../utils/useMostRecentMediaSession";
 import { ConditionalPanel } from "../common/ConditionalPanel";
 import { ProgressBar } from "./components/ProgressBar";
 import { Status } from "./components/Status";
@@ -12,28 +13,17 @@ export const TitleDetailsMemo = React.memo(TitleDetails);
 type MediaProps = {
 	media: MediaOutput | null;
 };
-// To allow cycling of Media sessions with Alt+Click we have to handle our own current session
-// This is why there are two current sessions defined here:
-// zebarCurrentSession: The actual session given from the Media provider.
-// currentSession: Our own local state of Zebar session.
-// This is not ideal and hopefully future Zebar releases will provide a way to change sessions internally.
+
+const NO_SESSIONS: MediaSession[] = [];
+
+// Alt+Click cycles sessions manually; otherwise the widget follows the session
+// that started playing most recently (see useMostRecentMediaSession).
 export default function Media({ media }: MediaProps) {
-	const [currentSessionIdx, setCurrentSessionIdx] = React.useState<number>(0);
-
-	const allSessions = media?.allSessions ?? [];
-	const zebarCurrentSession = media?.currentSession;
-
-	const zebarCurrentSessionIdx = allSessions.findIndex(
-		(s) => s.sessionId === zebarCurrentSession?.sessionId,
+	const allSessions = media?.allSessions ?? NO_SESSIONS;
+	const { currentSession, cycleSession } = useMostRecentMediaSession(
+		allSessions,
+		media?.currentSession ?? null,
 	);
-
-	React.useEffect(() => {
-		if (zebarCurrentSessionIdx !== -1) {
-			setCurrentSessionIdx(zebarCurrentSessionIdx);
-		}
-	}, [zebarCurrentSessionIdx]);
-
-	const currentSession = allSessions[currentSessionIdx];
 
 	const handlePlayPause = (e: React.MouseEvent) => {
 		if (!media || !currentSession) return;
@@ -51,11 +41,7 @@ export default function Media({ media }: MediaProps) {
 		}
 
 		if (e.altKey) {
-			if (currentSessionIdx < allSessions.length - 1) {
-				setCurrentSessionIdx((prev) => prev + 1);
-			} else {
-				setCurrentSessionIdx(0);
-			}
+			cycleSession();
 			return;
 		}
 
