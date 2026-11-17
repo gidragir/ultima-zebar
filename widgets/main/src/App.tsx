@@ -1,4 +1,4 @@
-import { useWidgetSetting } from "@ultima-zebar/config";
+import { useSystemThemeSync, useWidgetSetting } from "@ultima-zebar/config";
 import { useEffect, useState } from "react";
 import * as zebar from "zebar";
 import { Center } from "./components/Center";
@@ -35,11 +35,13 @@ function App() {
 	}, []);
 
 	useAutoTiling();
+	useSystemThemeSync();
 
 	const volumeIconClassnames = "h-3.5 w-3.5 text-icon";
 	const [marginX] = useWidgetSetting("main", "marginX");
 	const [paddingLeft] = useWidgetSetting("main", "paddingLeft");
 	const [paddingRight] = useWidgetSetting("main", "paddingRight");
+	const [showSystray] = useWidgetSetting("main", "showSystray");
 
 	return (
 		<div
@@ -87,9 +89,11 @@ function App() {
 						iconClassnames={volumeIconClassnames}
 					/>
 				</div>
-				<div className="h-full flex items-center px-0.5">
-					<Systray systray={output.systray} />
-				</div>
+				{showSystray && (
+					<div className="h-full flex items-center px-0.5">
+						<Systray systray={output.systray} />
+					</div>
+				)}
 				<TimeDisplay dateOutput={output.date} />
 				<div
 					className="flex items-center h-full"

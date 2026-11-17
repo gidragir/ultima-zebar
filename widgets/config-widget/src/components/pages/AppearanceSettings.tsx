@@ -13,7 +13,7 @@ import {
 import FontPicker from "../common/FontPicker";
 import { Separator } from "../common/Separator";
 import SettingsPage from "../SettingsPage";
-import { ThemeEditor } from "../theme/ThemeEditor";
+import { ThemePicker } from "../theme/ThemePicker";
 
 function AppearanceSettings() {
 	const [radius, setRadius] = useAppSetting("radius");
@@ -36,7 +36,7 @@ function AppearanceSettings() {
 
 	return (
 		<SettingsPage
-			title="Apperance"
+			title="Appearance"
 			description="Customise your ultima-zebar widgets to suit you."
 		>
 			<div>
@@ -118,7 +118,7 @@ function AppearanceSettings() {
 				<FormField>
 					<FieldTitle>Theme</FieldTitle>
 					<FieldInput>
-						<ThemeEditor />
+						<ThemePicker />
 					</FieldInput>
 				</FormField>
 			</div>

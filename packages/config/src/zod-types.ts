@@ -31,6 +31,9 @@ export const AppSettingsSchema = z.object({
 	radius: z.string(),
 	windowEffect: z.string().default("acrylic"),
 	fontFamily: z.string().default("Geist Mono"),
+	systemThemeSync: z.boolean().default(false),
+	lightThemeId: z.string().nullable().default("latte"),
+	darkThemeId: z.string().nullable().default("default"),
 });
 
 export const ProviderSettingsSchema = z.object({
@@ -47,6 +50,7 @@ export const MainWidgetSettingsSchema = BaseWidgetSettingsSchema.extend({
 		.union([z.literal("celsius"), z.literal("fahrenheit")])
 		.default("celsius"),
 	pinnedSystrayIcons: z.array(SystrayIconSchema).default([]),
+	showSystray: z.boolean().default(true),
 	marginX: z.number().default(0),
 	paddingLeft: z.number().default(4),
 	paddingRight: z.number().default(4),

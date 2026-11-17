@@ -22,7 +22,7 @@ export default function TitleBar() {
 	};
 
 	return (
-		<div className="bg-background border-b border-border flex items-center justify-between w-full rounded-t-lg">
+		<div className="bg-surface border-b border-border flex items-center justify-between w-full rounded-t-lg">
 			<h1 className="pl-4 py-2 font-medium">ultima-zebar</h1>
 			<button
 				type="button"
@@ -30,6 +30,7 @@ export default function TitleBar() {
 				className={cn(
 					buttonVariants(),
 					"px-3 h-full rounded-lg rounded-b-none rounded-l-none border-0",
+					"hover:bg-danger/80 active:bg-danger focus-visible:ring-danger/50",
 				)}
 			>
 				<X className="h-4 w-4" strokeWidth={3} />
