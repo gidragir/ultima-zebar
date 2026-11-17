@@ -1,11 +1,15 @@
-import { springPanel } from "@ultima-zebar/ui";
-import type { Transition } from "motion/react";
+import {
+	contentAppearance,
+	panelEnterTransition,
+	panelExitTransition,
+} from "@ultima-zebar/ui";
 import {
 	AnimatePresence,
 	animate,
 	motion,
 	useMotionTemplate,
 	useMotionValue,
+	useReducedMotion,
 	useTransform,
 } from "motion/react";
 import type React from "react";
@@ -21,19 +25,6 @@ interface ExpandingCarouselProps {
 	startIndex?: number;
 }
 
-const springCarouselItem: Transition = {
-	type: "spring",
-	stiffness: 320,
-	damping: 20,
-	mass: 0.4,
-};
-
-const carouselItemSwap = {
-	initial: { opacity: 0, scale: 0.85 },
-	animate: { opacity: 1, scale: 1 },
-	exit: { opacity: 0, scale: 0.85 },
-};
-
 export const ExpandingCarousel: React.FC<ExpandingCarouselProps> = ({
 	items,
 	expanded,
@@ -43,7 +34,14 @@ export const ExpandingCarousel: React.FC<ExpandingCarouselProps> = ({
 	fadeEdgeOffset = 10,
 	startIndex: customStartIndex,
 }) => {
+	const reduceMotion = useReducedMotion();
+	const carouselTransition = reduceMotion
+		? { duration: 0 }
+		: expanded
+			? panelEnterTransition
+			: panelExitTransition;
 	const totalItems = items.length;
+	const itemOrder = JSON.stringify(items.map((item) => item.key));
 	const fullWidth = totalItems * itemWidth + (totalItems - 1) * gap;
 	const visibleWidth = visibleCount * itemWidth + (visibleCount - 1) * gap;
 	const startIndex =
@@ -57,13 +55,21 @@ export const ExpandingCarousel: React.FC<ExpandingCarouselProps> = ({
 	const edgeColor = useTransform(edgeOpacity, (val) => `rgba(0,0,0,${val})`);
 	const gradient = useMotionTemplate`linear-gradient(to right, ${edgeColor} 0%, black ${leftEdge}, black ${rightEdge}, ${edgeColor} 100%)`;
 	useEffect(() => {
-		animate(edgeOpacity, expanded ? 1 : 0.3, { duration: 0.35 });
-	}, [expanded]);
+		const animation = animate(
+			edgeOpacity,
+			expanded ? 1 : 0.3,
+			reduceMotion
+				? { duration: 0 }
+				: expanded
+					? panelEnterTransition
+					: panelExitTransition,
+		);
+		return () => animation.stop();
+	}, [edgeOpacity, expanded, reduceMotion]);
 
 	return (
 		<div className="w-full flex justify-center items-center">
 			<motion.div
-				layout
 				className="relative overflow-hidden"
 				initial={false}
 				style={{
@@ -75,28 +81,32 @@ export const ExpandingCarousel: React.FC<ExpandingCarouselProps> = ({
 					maskSize: "100% 100%",
 					maskRepeat: "no-repeat",
 				}}
-				transition={springPanel}
+				transition={carouselTransition}
 			>
 				<motion.div
-					className="flex"
+					className="flex will-change-transform"
 					initial={false}
-					style={{ gap: `${gap}px` }}
+					style={{ width: fullWidth, gap: `${gap}px` }}
 					animate={{ x: expanded ? 0 : initialOffset }}
-					transition={springPanel}
-					layout
+					transition={carouselTransition}
 				>
-					<AnimatePresence mode="sync">
-						{items.map((item, index) => (
+					<AnimatePresence mode="sync" initial={false}>
+						{items.map((item) => (
 							<motion.div
 								key={item.key}
 								layout
-								className="flex items-center flex-shrink-0"
+								layoutDependency={itemOrder}
+								className="flex items-center flex-shrink-0 will-change-transform"
 								style={{ width: itemWidth }}
-								{...carouselItemSwap}
+								{...contentAppearance}
+								initial={reduceMotion ? false : contentAppearance.initial}
+								exit={
+									reduceMotion
+										? { opacity: 0, transition: { duration: 0 } }
+										: contentAppearance.exit
+								}
 								transition={{
-									...springPanel,
-									delay: index * 0.08,
-									layout: springCarouselItem,
+									...(reduceMotion ? { duration: 0 } : panelEnterTransition),
 								}}
 							>
 								{item}

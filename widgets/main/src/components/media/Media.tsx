@@ -49,7 +49,7 @@ export default function Media({ media }: MediaProps) {
 	};
 
 	return (
-		<ConditionalPanel sessionActive={!!media && !!currentSession}>
+		<ConditionalPanel sessionActive={!!media && !!currentSession} appearance>
 			<button
 				type="button"
 				className={cn(

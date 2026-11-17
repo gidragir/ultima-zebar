@@ -64,9 +64,13 @@ export {
 	TooltipTrigger,
 } from "./components/tooltip/Tooltip";
 export {
+	contentAppearance,
 	fadeSwap,
 	iconFeedback,
 	iconSwap,
+	panelEnterTransition,
+	panelExitTransition,
+	panelReveal,
 	quickSwap,
 	type SwapAnimation,
 	springLayout,
